@@ -26,7 +26,7 @@ function handleNavbarScroll() {
 // Kopiera eamil
 // =====================
 function copyEmail() {
-    const email = "dennis@atmosdesignstudio.se";
+    const email = "dennislantz@hotmail.com";
     navigator.clipboard.writeText(email).then(() => {
         alert("Email copied to clipboard!");
     }).catch(err => {
@@ -988,4 +988,5 @@ document.addEventListener("DOMContentLoaded", () => {
         console.error('Error during initialization:', error);
     }
 });
+
 
