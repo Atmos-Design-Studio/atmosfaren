@@ -1,0 +1,175 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://atmosdesignstudio.se/#website",
+      "url": "https://atmosdesignstudio.se/",
+      "name": "Atmos Design Studio | UX/UI Design & Web Development Stockholm",
+      "description": "Atmos Design Studio specializes in UX/UI design, web development, agile project management, and business strategies. Based in Stockholm, we deliver user-focused, data-driven digital solutions to help businesses grow and succeed.",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://atmosdesignstudio.se/?s={search_term_string}",
+        "query-input": "required name=search_term_string"
+      },
+      "inLanguage": ["en", "sv"]
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://atmosdesignstudio.se/#organization",
+      "name": "Atmos Design Studio",
+      "url": "https://atmosdesignstudio.se/",
+      "logo": "https://atmosdesignstudio.se/logo.png",
+      "contactPoint": [
+        {
+          "@type": "ContactPoint",
+          "telephone": "+46709455459",
+          "contactType": "Customer Support",
+          "areaServed": "SE",
+          "availableLanguage": ["English", "Swedish"]
+        }
+      ],
+      "sameAs": [
+        "https://www.linkedin.com/in/dennis-lantz-ux/",
+        "https://github.com/atmosdesignstudio",
+        "https://www.youtube.com/@atmosfarenTV",
+        "https://www.tiktok.com/@atmosfaren",
+        "https://www.twitch.tv/atmosfaren"
+      ],
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Forskningsringen 94",
+        "addressLocality": "Stockholm",
+        "postalCode": "174 61",
+        "addressCountry": "SE"
+      },
+      "description": "Atmos Design Studio is a creative agency specializing in UX/UI design, web development, and agile project management based in Stockholm.",
+      "founder": {
+        "@type": "Person",
+        "name": "Dennis Lantz",
+        "url": "https://atmosdesignstudio.se/dennis-portfolio.html"
+      }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://atmosdesignstudio.se/#webpage",
+      "url": "https://atmosdesignstudio.se/",
+      "name": "Atmos Design Studio - UX/UI Design & Web Development Stockholm",
+      "description": "Atmos Design Studio offers expert UX research, UI design, and web development services in Stockholm. We use agile methods and data-driven insights to create user-focused digital experiences.",
+      "isPartOf": {
+        "@id": "https://atmosdesignstudio.se/#website"
+      },
+      "breadcrumb": {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://atmosdesignstudio.se/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Services",
+            "item": "https://atmosdesignstudio.se/services"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Contact",
+            "item": "https://atmosdesignstudio.se/contact"
+          }
+        ]
+      },
+      "primaryImageOfPage": {
+        "@type": "ImageObject",
+        "url": "https://atmosdesignstudio.se/hero-image.png",
+        "caption": "Atmos Design Studio - UX/UI Design & Web Development Stockholm"
+      },
+      "inLanguage": ["en", "sv"]
+    },
+    {
+      "@type": "Service",
+      "@id": "https://atmosdesignstudio.se/#services",
+      "name": "UX/UI Design, Web Development & Agile Project Management",
+      "url": "https://atmosdesignstudio.se/services",
+      "provider": {
+        "@id": "https://atmosdesignstudio.se/#organization"
+      },
+      "description": "We specialize in user-centric UX/UI design, responsive web development, business strategy, and agile project management. We also offer UX research, usability testing, and data-driven insights to improve user experience and product performance.",
+      "areaServed": "SE",
+      "inLanguage": ["English", "Swedish"],
+      "serviceType": [
+        "UX Research",
+        "UI Design",
+        "Frontend Development",
+        "Business Strategy",
+        "Agile Project Management",
+        "SEO",
+        "PWA Development",
+        "Web Design"
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://atmosdesignstudio.se/#faq",
+      "url": "https://atmosdesignstudio.se/faq",
+      "name": "Atmos Design Studio - Frequently Asked Questions",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is Atmos Design Studio?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Atmos Design Studio is a Stockholm-based digital design agency specializing in UX/UI design, frontend development, and agile project management."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What services do you offer?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "We provide UX research, UI design, frontend web development, PWA development, and business strategy consulting, including agile methodologies like Scrum and Kanban."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I contact you?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "You can contact us via email at info@atmosdesignstudio.se or call +46 (0) 709 45 54 59."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "Person",
+      "@id": "https://atmosdesignstudio.se/#dennis-lantz",
+      "name": "Dennis Lantz",
+      "jobTitle": "Founder & CEO",
+      "description": "Dennis Lantz is a seasoned UX designer and agile project manager with over 15 years of experience. He leads Atmos Design Studio, focusing on creating user-centric digital solutions.",
+      "url": "https://atmosdesignstudio.se/dennis-portfolio.html",
+      "sameAs": [
+        "https://www.linkedin.com/in/dennis-lantz-ux/",
+        "https://github.com/atmosdesignstudio"
+      ]
+    },
+    {
+      "@type": "ContactPage",
+      "@id": "https://atmosdesignstudio.se/contact#contact",
+      "url": "https://atmosdesignstudio.se/contact",
+      "name": "Contact Atmos Design Studio",
+      "description": "Get in touch with us for UX/UI design, web development, business strategies, and agile project management. Based in Stockholm, we create innovative digital solutions.",
+      "contactOption": ["TollFree", "Online Chat"],
+      "inLanguage": ["en", "sv"]
+    },
+    {
+      "@type": "AboutPage",
+      "@id": "https://atmosdesignstudio.se/about#about",
+      "url": "https://atmosdesignstudio.se/about",
+      "name": "About Atmos Design Studio",
+      "description": "Learn more about Atmos Design Studio, a Stockholm-based agency specializing in UX/UI design, web development, and agile methodologies. Our expert team delivers innovative and user-centered digital experiences."
+    }
+  ]
+}

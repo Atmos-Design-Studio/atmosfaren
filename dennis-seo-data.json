@@ -1,0 +1,226 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+        {
+      "@type": "WebSite",
+      "@id": "https://www.atmosdesignstudio.se/#website",
+      "url": "https://www.atmosdesignstudio.se/",
+      "name": "Atmos Design Studio - Dennis Lantz Portfolio",
+      "description": "Dennis Lantz's portfolio showcasing design, UX/UI, web development, agile project management, and creative coding solutions.",
+      "keywords": "Dennis Lantz, Designer, UI, UX, Webdesigner, Web, Intuitive, Researcher, Dennis Designer, Design Dennis, UX Designer, UI Developer, Web Development, Agile Project Manager, Front-end, Responsive Design, Prototyping, Usability Testing, SEO, Interaction Design, Creative Coding, Stockholm, Sweden",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://www.atmosdesignstudio.se/?s={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    ,
+    {
+      "@type": "Person",
+      "@id": "https://www.atmosdesignstudio.se/dennis-portfolio.html#person",
+      "name": "Dennis Lantz",
+      "jobTitle": "Experience Designer & Developer",
+      "url": "https://www.atmosdesignstudio.se/dennis-portfolio.html",
+      "sameAs": [
+        "https://www.linkedin.com/in/atmosfaren/",
+        "https://github.com/atmosdesignstudio",
+        "https://www.youtube.com/@atmosfarenTV",
+        "https://www.tiktok.com/@atmosfaren",
+        "https://www.twitch.tv/atmosfaren",
+        "https://www.atmosdesignstudio.se/dennis-portfolio.html"
+      ],
+      "image": "https://www.atmosdesignstudio.se/profil1.png",
+      "description": "Dennis Lantz is an experience designer and developer passionate about UX/UI design, web development, branding, agile project management, and dance. Based in Stockholm, Sweden, he blends creative problem-solving with technical expertise.",
+      "keywords": "Dennis Lantz, UX Design, UI Design, Web Development, Agile Project Management, Project Leader, Scrum Master, IT, Website Design, User Experience, User Interface, Dancer, Locking, Hiphop, Popping, Breaking, Streetdance, Sweden, Stockholm, Norrköping",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Atmos Design Studio",
+        "url": "https://www.atmosdesignstudio.se/"
+      },
+      "alumniOf": {
+        "@type": "CollegeOrUniversity",
+        "name": "Changemaker Educations",
+        "sameAs": "https://www.changemakereducations.com/"
+      },
+      "skills": [
+        "UX/UI Design",
+        "Web Development",
+        "HTML",
+        "CSS",
+        "JavaScript",
+        "Agile Project Management",
+        "Branding",
+        "SEO",
+        "Business Strategy",
+        "Creative Problem Solving",
+        "Dance",
+        "Locking",
+        "Hiphop",
+        "Streetdance"
+      ],
+      "knowsLanguage": ["English", "Swedish"],
+      "hasCredential": [
+        {
+          "@type": "EducationalOccupationalCredential",
+          "credentialCategory": "Professional Certificate",
+          "name": "SAFe 5.0 Certification",
+          "description": "Certified in Scaled Agile Framework (SAFe) 5.0 for Agile Project Management.",
+          "url": "https://www.atmosdesignstudio.se/Dennis_Lantz_SAFe_Certified_Scale_5.0.pdf"
+        },
+        {
+          "@type": "EducationalOccupationalCredential",
+          "credentialCategory": "Professional Certificate",
+          "name": "Agile Project Manager",
+          "description": "Certified Agile Project Manager from Changemaker Educations.",
+          "url": "https://www.atmosdesignstudio.se/Dennis_Lantz_Diploma_Agile_Project_Manager.pdf"
+        }
+      ],
+      "hobbies": ["Dance", "Video Games", "Traveling", "Music Production"],
+      "award": [
+        "Judged Lock City Singapore Dance Battle (2016)",
+        "Allstyle Battle Judge in Lithuania (2012)",
+        "Community Builder in the Global Dance Scene"
+      ],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+46 709 45 54 59",
+        "contactType": "Customer Support",
+        "areaServed": "SE",
+        "availableLanguage": ["English", "Swedish"]
+      }
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://www.atmosdesignstudio.se/#organization",
+      "name": "Atmos Design Studio",
+      "url": "https://www.atmosdesignstudio.se/",
+      "logo": "https://www.atmosdesignstudio.se/atmos3.png",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+46 709 45 54 59",
+        "contactType": "Customer Support",
+        "areaServed": "SE",
+        "availableLanguage": ["English", "Swedish"]
+      },
+      "sameAs": [
+        "https://www.linkedin.com/in/atmosfaren/",
+        "https://github.com/atmosdesignstudio",
+        "https://www.youtube.com/@atmosfarenTV",
+        "https://www.tiktok.com/@atmosfaren",
+        "https://www.twitch.tv/atmosfaren"
+      ]
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://www.atmosdesignstudio.se/dennis-portfolio.html#webpage",
+      "url": "https://www.atmosdesignstudio.se/dennis-portfolio.html",
+      "name": "Dennis Lantz - Portfolio",
+      "description": "Explore Dennis Lantz's portfolio, including his recent projects, services offered in design, UX/UI, web development, branding, and agile project management.",
+      "keywords": "Dennis Lantz, UX Design, UI Design, User Interface Design, User Experience, Agile Project Management, Scrum, IT, Web Development, Front-end Development, Back-end Development, Responsive Design, Mobile-first Design, SEO, Branding, Concept Development, Creative Coding, Interaction Design, Usability Testing, Digital Strategy, UX Research, Sweden, Stockholm, Norrköping, HTML, CSS, JavaScript, UX Strategy, Web Optimization",
+      "isPartOf": {
+        "@id": "https://www.atmosdesignstudio.se/#website"
+      },
+      "breadcrumb": {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://www.atmosdesignstudio.se/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Portfolio",
+            "item": "https://www.atmosdesignstudio.se/dennis-portfolio.html"
+          }
+        ]
+      },
+      "primaryImageOfPage": {
+        "@type": "ImageObject",
+        "url": "https://www.atmosdesignstudio.se/profil1.png",
+        "caption": "Dennis Lantz - Experience Designer & Developer"
+      }
+    },
+    {
+      "@type": "Service",
+      "@id": "https://www.atmosdesignstudio.se/dennis-portfolio.html#services",
+      "name": "Design, Development & Agile Project Management",
+      "url": "https://www.atmosdesignstudio.se/dennis-portfolio.html#services",
+      "provider": {
+        "@id": "https://www.atmosdesignstudio.se/#organization"
+      },
+      "description": "Dennis Lantz offers a range of services including UI/UX design, website development, branding, concept development, SEO, analytics, and agile project management."
+    },
+    {
+      "@type": "CreativeWork",
+      "@id": "https://www.atmosdesignstudio.se/dennis-portfolio.html#works",
+      "name": "Recent Projects",
+      "url": "https://www.atmosdesignstudio.se/dennis-portfolio.html#works",
+      "creator": {
+        "@id": "https://www.atmosdesignstudio.se/dennis-portfolio.html#person"
+      },
+      "description": "A showcase of Dennis Lantz's recent projects, featuring his work in design, UX/UI, and development for various clients and companies."
+    },
+    {
+      "@type": "ContactPage",
+      "@id": "https://www.atmosdesignstudio.se/dennis-portfolio.html#contact",
+      "url": "https://www.atmosdesignstudio.se/dennis-portfolio.html#contact",
+      "name": "Contact Dennis Lantz",
+      "description": "Get in touch with Dennis Lantz for design, agile management, marketing, or business strategy.",
+      "contactOption": ["TollFree", "Online Chat"],
+      "inLanguage": ["en", "sv"]
+    },
+    {
+      "@type": "CreativeWork",
+      "@id": "https://www.atmosdesignstudio.se/case-study-parkingtime",
+      "name": "Parking Time - UX/UI Lead & Business Strategist",
+      "url": "https://www.atmosdesignstudio.se/case-study-parkingtime",
+      "description": "Dennis Lantz led the UX/UI design and business strategy for the Parking Time application, focusing on real-time parking solutions and seamless user navigation.",
+      "keywords": "UX/UI Design, Web Development, Business Strategy, Real-time Parking",
+      "dateCreated": "2024-03",
+      "inLanguage": ["en", "sv"]
+    },
+    {
+      "@type": "CreativeWork",
+      "@id": "https://www.atmosdesignstudio.se/case-study-redmilk",
+      "name": "Red Milk LLC - Project Manager & Scrum Master",
+      "url": "https://www.atmosdesignstudio.se/case-study-redmilk",
+      "description": "Dennis served as the Project Manager and Scrum Master for Red Milk LLC, leading the development of an app concept, conducting UX research, and making strategic design decisions.",
+      "keywords": "Project Management, Scrum, UX Research, App Concept, Design Strategy",
+      "dateCreated": "2024-06",
+      "inLanguage": ["en", "sv"]
+    },
+    {
+      "@type": "CreativeWork",
+      "@id": "https://www.atmosdesignstudio.se/case-study-proeventstaffing",
+      "name": "Pro Event Staffing - Lead Developer & Designer",
+      "url": "https://www.atmosdesignstudio.se/case-study-proeventstaffing",
+      "description": "Dennis took charge of designing and developing the Pro Event Staffing platform from scratch, handling everything from user interface design to coding the website.",
+      "keywords": "Web Development, UI Design, Coding, Platform Development",
+      "dateCreated": "2024-09",
+      "inLanguage": ["en", "sv"]
+    },
+    {
+      "@type": "CreativeWork",
+      "@id": "https://www.atmosdesignstudio.se/case-study-ahum",
+      "name": "Ahum - Team Member & UX Researcher",
+      "url": "https://www.atmosdesignstudio.se/case-study-ahum",
+      "description": "Dennis participated in the Ahum project as a team member and UX researcher, focusing on implementing user-centered solutions and conducting detailed user research.",
+      "keywords": "UX Research, Team Collaboration, User-Centered Solutions",
+      "dateCreated": "2024-06",
+      "inLanguage": ["en", "sv"]
+    },
+    {
+      "@type": "CreativeWork",
+      "@id": "https://www.atmosdesignstudio.se/case-study-carlf",
+      "name": "Carl F - School Project: Project Leader & UI/UX Designer",
+      "url": "https://www.atmosdesignstudio.se/case-study-carlf",
+      "description": "In this school project, Dennis took on the roles of Project Leader and UI/UX Designer, managing the project's agile methods and creating a user-friendly interface.",
+      "keywords": "Project Leadership, UI Design, UX Design, Agile Methods",
+      "dateCreated": "2023-12",
+      "inLanguage": ["en", "sv"]
+    }
+  ]
+}
