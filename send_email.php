@@ -18,14 +18,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email_body .= "\nMessage:\n" . htmlspecialchars(strip_tags(trim($_POST['message'])));
 
     // Email headers
-    $headers = "From: info@atmosdesignstudio.se\r\n";
+    $headers = "From: dennislantz@hotmail.com\r\n";
     $headers .= "Reply-To: $email\r\n";
     $headers .= "X-Mailer: PHP/" . phpversion();
     $headers .= "MIME-Version: 1.0\r\n";
     $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
 
     // Send the email
-    if (mail("info@atmosdesignstudio.se", $email_subject, $email_body, $headers)) {
+    if (mail("dennislantz@hotmail.com", $email_subject, $email_body, $headers)) {
         echo "success"; // Return "success" to match JavaScript logic
     } else {
         echo "Failed to send message. Please try again later.";
@@ -34,3 +34,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     echo "Invalid request method.";
 }
 ?>
+
