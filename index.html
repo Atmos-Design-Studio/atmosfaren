@@ -915,27 +915,29 @@
 </section>
 
 <!-- Footer Section -->
-<!-- Footer Section -->
 <footer class="footer custom-section section-to-animate">
   <div class="footer-logo-container">
-    <!-- SVG: roterande text längs en cirkel -->
-    <svg class="footer-logo-svg spin-pingpong" viewBox="0 0 200 200" aria-label="Atmos Design Studio Stockholm Sweden">
-      <defs>
-        <!-- Cirkelbana -->
-        <path id="circlePath" d="M100,100 m-60,0 a60,60 0 1,1 120,0 a60,60 0 1,1 -120,0"/>
-      </defs>
-
-      <!-- Grupp som roteras -->
-      <g class="text-ring">
-        <text class="ring-text">
-          <textPath href="#circlePath" startOffset="0%">
-            Atmos Design Studio * Stockholm * Sweden * 
-            Atmos Design Studio * Stockholm * Sweden *
-          </textPath>
-        </text>
-      </g>
-    </svg>
-
+    <!-- SVG: endast texten roterar, loggan rör sig inte -->
+      <svg
+        class="footer-logo-svg"
+        viewBox="0 0 200 200"
+        aria-label="Atmos Design Studio Stockholm Sweden"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+      >
+        <defs>
+          <path id="circlePath" d="M100,100 m-60,0 a60,60 0 1,1 120,0 a60,60 0 1,1 -120,0"/>
+        </defs>
+      
+        <!-- Endast denna grupp roteras -->
+        <g class="text-ring">
+          <text class="ring-text">
+            <textPath xlink:href="#circlePath" startOffset="0%">
+              Atmos Design Studio * Stockholm * Sweden * Atmos Design Studio * Stockholm * Sweden *
+            </textPath>
+          </text>
+        </g>
+      </svg>
     <div class="footer-logo-circle">
       <img src="bilder/atmos3.webp" alt="Atmos Design Studio Logo" class="footer-logo-img">
     </div>
@@ -3273,6 +3275,7 @@
 </body>
 
 </html>
+
 
 
 
