@@ -981,76 +981,6 @@
   </div>
 </footer>
 
-<!-- Visa innehåll efter intro-animation som tidigare -->
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-  var main  = document.getElementById('main-content');
-  var intro = document.getElementById('intro-animation');
-  if (!main || !intro) return;
-
-  // Visa intro. Dölj main
-  intro.style.display = '';
-  main.style.display = 'none';
-
-  // Reduced motion
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    intro.style.display = 'none';
-    main.style.display = '';
-    return;
-  }
-
-  var doneCalled = false;
-  function done() {
-    if (doneCalled) return;
-    doneCalled = true;
-    main.style.display = '';
-    intro.style.display = 'none';
-    cleanup();
-  }
-
-  // End bara när containern själv är målet
-  function onAnimEnd(ev) {
-    if (ev.target !== intro) return;
-    done();
-  }
-
-  function cleanup() {
-    intro.removeEventListener('animationend', onAnimEnd);
-    clearTimeout(fallback);
-  }
-
-  // Endast animationend. Ingen transitionend
-  intro.addEventListener('animationend', onAnimEnd);
-
-  // Fallback baserat på faktisk CSS-duration och delay på containern
-  function computeIntroMs(el) {
-    var cs = getComputedStyle(el);
-
-    function toListMs(v) {
-      if (!v) return [0];
-      return v.split(',').map(function (x) {
-        x = x.trim();
-        return x.endsWith('ms') ? parseFloat(x) : parseFloat(x) * 1000;
-      });
-    }
-
-    var durs = toListMs(cs.animationDuration);
-    var dels = toListMs(cs.animationDelay);
-    var n = Math.max(durs.length, dels.length);
-    var max = 0;
-    for (var i = 0; i < n; i++) {
-      var d = durs[i] != null ? durs[i] : durs[durs.length - 1] || 0;
-      var dl = dels[i] != null ? dels[i] : dels[dels.length - 1] || 0;
-      if (d + dl > max) max = d + dl;
-    }
-    // minst en sekund och liten buffert
-    return Math.max(1000, max + 120);
-  }
-
-  var fallback = setTimeout(done, computeIntroMs(intro));
-});
-</script>
-
 
 <!-- Popup for About (Atmos) -->
 <div id="about-popup" class="project-popup">
@@ -3367,6 +3297,7 @@ document.addEventListener('DOMContentLoaded', function () {
 </body>
 
 </html>
+
 
 
 
