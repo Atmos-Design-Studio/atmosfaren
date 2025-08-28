@@ -920,24 +920,30 @@
     <!-- SVG: endast texten roterar. Loggan står still -->
     <svg
       class="footer-logo-svg"
+      data-speed="22"
+      data-mode="loop"
       viewBox="0 0 200 200"
       aria-label="Atmos Design Studio Stockholm Sweden"
       xmlns="http://www.w3.org/2000/svg"
       xmlns:xlink="http://www.w3.org/1999/xlink"
     >
       <defs>
-        <path id="circlePath" d="M100,100 m-60,0 a60,60 0 1,1 120,0 a60,60 0 1,1 -120,0"/>
+        <!-- radius 60 -->
+        <path id="circlePath"
+              d="M100,100 m-60,0 a60,60 0 1,1 120,0 a60,60 0 1,1 -120,0" />
       </defs>
 
+      <!-- Roteras med CSS -->
       <g class="text-ring">
         <text class="ring-text">
-          <textPath xlink:href="#circlePath" startOffset="0%">
-            Atmos Design Studio • Stockholm • Sweden •
+          <textPath href="#circlePath" xlink:href="#circlePath" startOffset="0%">
+            • Atmos Design Studio • Stockholm • Sweden • Atmos Design Studio • Stockholm • Sweden •
           </textPath>
         </text>
       </g>
     </svg>
 
+    <!-- Statisk logga i mitten -->
     <div class="footer-logo-circle">
       <img src="bilder/atmos3.webp" alt="Atmos Design Studio Logo" class="footer-logo-img">
     </div>
@@ -960,6 +966,7 @@
     </p>
   </div>
 </footer>
+
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
@@ -3339,6 +3346,7 @@ document.addEventListener('DOMContentLoaded', () => {
 </body>
 
 </html>
+
 
 
 
