@@ -998,131 +998,62 @@ document.addEventListener('DOMContentLoaded', () => {
   if (!svg) return;
 
   const path = svg.querySelector('#circlePath');
-  const textPath = svg.querySelector('textPath');
-  const ringGroup = svg.querySelector('.text-ring');
-  if (!path || !textPath || !ringGroup) return;
+  const tp = svg.querySelector('textPath');
+  const ring = svg.querySelector('.text-ring');
+  if (!path || !tp || !ring) return;
 
-  // Länka säkert
-  textPath.setAttribute('href', '#circlePath');
-  textPath.setAttribute('xlink:href', '#circlePath');
+  // Säkerställ båda attributen för maximal bakåtkompat
+  tp.setAttribute('href', '#circlePath');
+  tp.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', '#circlePath');
 
-  // Basfras
-  const basePhrase =
-    textPath.getAttribute('data-base') ||
-    (textPath.textContent || '').trim() ||
-    'Atmosfären • Design Studio • Stockholm • Sweden • ';
+  // Mät faktisk längd och normalisera
+  const L = path.getTotalLength();
+  path.setAttribute('pathLength', L.toFixed(2));
 
-  // Mätning via canvas
-  const canvas = document.createElement('canvas');
-  const ctx = canvas.getContext('2d');
+  // Rensa innan vi sätter nytt
+  tp.removeAttribute('textLength');
+  tp.removeAttribute('lengthAdjust');
 
-  function setCanvasFont(fromEl) {
-    const cs = getComputedStyle(fromEl);
-    const fontStyle = cs.fontStyle || 'normal';
-    const fontVariant = cs.fontVariant || 'normal';
-    const fontWeight = cs.fontWeight || '400';
-    const fontSize = cs.fontSize || '12px';
-    const fontFamily = cs.fontFamily || 'sans-serif';
-    ctx.font = `${fontStyle} ${fontVariant} ${fontWeight} ${fontSize} ${fontFamily}`;
+  // Motorer
+  const ua = navigator.userAgent;
+  const isFirefox = /Firefox\//.test(ua);
+  const isSafari = /^((?!chrome|android).)*safari/i.test(ua);
+
+  // Fyll banan exakt
+  // Lätt “fudge” för att undvika wrap vid kantfall
+  if (isFirefox || isSafari) {
+    tp.setAttribute('lengthAdjust', 'spacingAndGlyphs');
+    tp.setAttribute('textLength', (L * 0.997).toFixed(2));
+  } else {
+    tp.setAttribute('lengthAdjust', 'spacing');
+    tp.setAttribute('textLength', L.toFixed(2));
   }
 
-  // Anpassa texten till cirkelns omkrets
-  function fitTextToCircle() {
-    const L = path.getTotalLength();
-    path.setAttribute('pathLength', L.toFixed(2));
+  // Säkerställ reflow i WebKit
+  tp.setAttribute('startOffset', '0%');
+  // Force layout tick
+  void tp.getComputedTextLength();
 
-    const textEl = svg.querySelector('.ring-text') || svg;
-    setCanvasFont(textEl);
-
-    let s = basePhrase.trim();
-    let guard = 0;
-    const target = L * 1.05; // liten buffert så cirkeln alltid täcks
-
-    while (ctx.measureText(s).width < target && guard < 24) {
-      s += ' ' + basePhrase;
-      guard++;
-    }
-    textPath.textContent = s;
-
-    // Motor-detektion
-    const ua = navigator.userAgent;
-    const isFirefox = /Firefox\//.test(ua);
-    const isSafari = /^((?!chrome|android).)*safari/i.test(ua);
-
-    // Rensa först
-    textPath.removeAttribute('textLength');
-    textPath.removeAttribute('lengthAdjust');
-
-    if (isFirefox) {
-      textPath.setAttribute('lengthAdjust', 'spacingAndGlyphs');
-      textPath.setAttribute('textLength', (L * 0.997).toFixed(2));
-    } else if (!isSafari) {
-      textPath.setAttribute('lengthAdjust', 'spacing');
-      textPath.setAttribute('textLength', L.toFixed(2));
-    }
-    // Safari lämnas utan textLength
-  }
-
-  // Styr rörelsen som tidigare via data-attribut
-  function applyMotionPrefs() {
-    const anim = ringGroup.querySelector('animateTransform');
-    if (!anim) return;
-
-    const prefersReduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReduce) {
-      try { svg.pauseAnimations && svg.pauseAnimations(); } catch (e) {}
-      anim.setAttribute('dur', '0s');
-      return;
-    }
-
-    // Hastighet i sekunder
-    const speed = parseFloat(svg.dataset.speed || anim.getAttribute('dur') || '24');
-    anim.setAttribute('dur', `${speed}s`);
-
-    // Läge: loop eller pingpong
-    const mode = (svg.dataset.mode || 'loop').toLowerCase();
-    // Återställ först
-    anim.removeAttribute('values');
-    anim.removeAttribute('keyTimes');
-    anim.removeAttribute('keySplines');
-    anim.setAttribute('calcMode', 'linear');
-    anim.setAttribute('attributeName', 'transform');
-    anim.setAttribute('type', 'rotate');
-
-    if (mode === 'pingpong') {
-      // Fram och tillbaka
-      anim.setAttribute('values', '0 100 100;360 100 100;0 100 100');
-      anim.setAttribute('keyTimes', '0;0.5;1');
-      anim.setAttribute('calcMode', 'paced');
-      anim.removeAttribute('from');
-      anim.removeAttribute('to');
-    } else {
-      // Normal loop
-      anim.setAttribute('from', '0 100 100');
-      anim.setAttribute('to', '360 100 100');
-    }
-
-    anim.setAttribute('repeatCount', 'indefinite');
-  }
-
-  // Init
-  fitTextToCircle();
-  applyMotionPrefs();
-
-  // Reagera på resize och font-byten
-  let pending = null;
-  const ro = new ResizeObserver(() => {
-    if (pending) cancelAnimationFrame(pending);
-    pending = requestAnimationFrame(() => {
-      fitTextToCircle();
-      applyMotionPrefs();
+  // Responstänk vid font byte och orientering
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(() => {
+      // Upprepa för säkerhets skull när fonten laddat
+      const L2 = path.getTotalLength();
+      path.setAttribute('pathLength', L2.toFixed(2));
+      if (isFirefox || isSafari) {
+        tp.setAttribute('lengthAdjust', 'spacingAndGlyphs');
+        tp.setAttribute('textLength', (L2 * 0.997).toFixed(2));
+      } else {
+        tp.setAttribute('lengthAdjust', 'spacing');
+        tp.setAttribute('textLength', L2.toFixed(2));
+      }
+      void tp.getComputedTextLength();
     });
-  });
-  ro.observe(svg);
+  }
+
+  // Reduced motion respekt för allt annat innehåll
+  // SMIL snurren ligger kvar enligt din originaldesign
 });
-
-
-
 
 
 
