@@ -918,41 +918,39 @@
 <footer class="footer custom-section section-to-animate">
   <div class="footer-logo-container">
     <!-- SVG: endast texten roterar. Loggan står still -->
-    <!-- endast texten snurrar -->
-<svg
-  class="footer-logo-svg"
-  viewBox="0 0 200 200"
-  aria-label="Atmos Design Studio Stockholm Sweden"
-  xmlns="http://www.w3.org/2000/svg"
->
-  <defs>
-    <!-- radius 60  omkrets ≈ 377 -->
-    <path id="circlePath"
-          d="M100,100 m-60,0 a60,60 0 1,1 120,0 a60,60 0 1,1 -120,0"
-          pathLength="377"/>
-  </defs>
+    <svg
+      class="footer-logo-svg"
+      viewBox="0 0 200 200"
+      aria-label="Atmos Design Studio Stockholm Sweden"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <defs>
+        <!-- radius 60  omkrets ≈ 377 -->
+        <path id="circlePath"
+              d="M100,100 m-60,0 a60,60 0 1,1 120,0 a60,60 0 1,1 -120,0"/>
+      </defs>
 
-  <!-- rotera endast denna grupp runt centrum -->
-  <g class="text-ring" transform="rotate(0 100 100)">
-    <text class="ring-text">
-      <textPath href="#circlePath"
-                startOffset="0%"
-                lengthAdjust="spacing"
-                textLength="377">
-        Atmosfären • Design Studio • Stockholm • Sweden • 
-      </textPath>
-    </text>
+      <!-- rotera endast denna grupp runt centrum -->
+      <g class="text-ring" transform="rotate(0 100 100)">
+        <text class="ring-text">
+          <!-- JS fyller på text automatiskt så hela cirkeln täcks -->
+          <textPath id="ringTextPath" href="#circlePath"
+                    startOffset="0%">
+            Atmosfären • Design Studio • Stockholm • Sweden •
+          </textPath>
+        </text>
 
-    <!-- 1) kontinuerlig rotation  ändra dur för fart -->
-    <animateTransform
-      attributeName="transform"
-      type="rotate"
-      from="0 100 100"
-      to="360 100 100"
-      dur="24s"
-      repeatCount="indefinite"/>
-  </g>
-</svg>
+        <!-- kontinuerlig rotation  justera dur för fart -->
+        <animateTransform
+          id="ringSpin"
+          attributeName="transform"
+          type="rotate"
+          from="0 100 100"
+          to="360 100 100"
+          dur="24s"
+          repeatCount="indefinite"/>
+      </g>
+    </svg>
 
     <div class="footer-logo-circle">
       <img src="bilder/atmos3.webp" alt="Atmos Design Studio Logo" class="footer-logo-img">
@@ -978,20 +976,18 @@
 </footer>
 
 <script>
+  // Visa innehåll snabbt efter laddning  samma som tidigare
   (function () {
     function showContent() {
       var main = document.getElementById('main-content');
       var intro = document.getElementById('intro-animation');
       if (main) main.style.display = '';
-      if (intro) intro.style.display = 'none'; // or intro.remove();
+      if (intro) intro.style.display = 'none';
     }
-    // show as soon as DOM is ready
     document.addEventListener('DOMContentLoaded', showContent);
-    // hard fallback in case something prevents DOMContentLoaded
     setTimeout(showContent, 3000);
   })();
 </script>
-
 
 <!-- Popup for About (Atmos) -->
 <div id="about-popup" class="project-popup">
@@ -3308,6 +3304,7 @@
 </body>
 
 </html>
+
 
 
 
