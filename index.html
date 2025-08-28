@@ -917,41 +917,25 @@
 <!-- Footer Section -->
 <footer class="footer custom-section section-to-animate">
   <div class="footer-logo-container">
-        <svg
-          class="footer-logo-svg"
-          viewBox="0 0 200 200"
-          aria-label="Atmos Design Studio Stockholm Sweden"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <defs>
-            <!-- radius 60  omkrets ≈ 377 -->
-            <path id="circlePath"
-                  d="M100,100 m-60,0 a60,60 0 1,1 120,0 a60,60 0 1,1 -120,0"
-                  pathLength="377"/>
-          </defs>
-        
-          <!-- rotera endast denna grupp runt centrum -->
-          <g class="text-ring" transform="rotate(0 100 100)">
-            <text class="ring-text">
-              <textPath href="#circlePath"
-                        startOffset="0%"
-                        lengthAdjust="spacing"
-                        textLength="377">
-                 Atmos Design Studio • Stockholm • Sweden • 
-              </textPath>
-            </text>
-        
-            <!-- 1) kontinuerlig rotation  ändra dur för fart -->
-            <animateTransform
-              attributeName="transform"
-              type="rotate"
-              from="0 100 100"
-              to="360 100 100"
-              dur="24s"
-              repeatCount="indefinite"/>
-          </g>
-        </svg>
-
+        <!-- SVG: endast texten rör sig via JS, ingen SMIL, ingen CSS-rotation -->
+      <svg
+        class="footer-logo-svg"
+        data-mode="loop"            <!-- loop eller pingpong -->
+        data-speed="22"             <!-- sek per varv -->
+        viewBox="0 0 200 200"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <path id="circlePath"
+                d="M100,100 m-60,0 a60,60 0 1,1 120,0 a60,60 0 1,1 -120,0"/>
+        </defs>
+      
+        <text class="ring-text">
+          <textPath href="#circlePath" startOffset="0%">
+            • Atmos Design Studio • Stockholm • Sweden •
+          </textPath>
+        </text>
+      </svg>
     <!-- Din statiska logga i mitten -->
     <div class="footer-logo-circle">
       <img src="bilder/atmos3.webp" alt="Atmos Design Studio Logo" class="footer-logo-img">
@@ -3290,6 +3274,7 @@
 </body>
 
 </html>
+
 
 
 
