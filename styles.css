@@ -2673,126 +2673,6 @@ a {
     text-decoration: underline;
 }
 
-/* Ensure the popup-footer is centered and aligned properly */
-.popup-footer {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: left; /* Ensures content inside is left-aligned */
-    padding: 20px; /* Add some padding for better spacing */
-    margin-top: 20px; /* Space above the footer */
-}
-
-.footer-section h3,
-.footer-social h3 {
-    text-align: center; /* Centering the h3 titles */
-    width: 100%; /* Ensures the title takes the full width */
-}
-
-/* Center the social media icons horizontally */
-.footer-social {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    margin-top: 20px;
-}
-
-.social-media-icons {
-    list-style: none;
-    display: flex;
-    justify-content: center;
-    gap: 15px; /* Spacing between icons */
-    padding: 0;
-}
-
-.social-media-icons li {
-    display: inline-block;
-}
-
-.social-media-icons a {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 30px; /* Adjust icon size */
-    height: 30px;
-    border-radius: 50%;
-    background-color: rgba(255, 255, 255, 0.1);
-    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.social-media-icons a img {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-}
-
-.social-media-icons a:hover {
-    background-color: rgba(145, 71, 255, 0.8);
-    transform: scale(1.1);
-    box-shadow: 0 4px 15px rgba(145, 71, 255, 0.5);
-}
-
-/* Additional padding to ensure icons and content are not cramped */
-.popup-footer p, .popup-footer a {
-    margin: 5px 0; /* Space between paragraphs and links */
-}
-
-/* =================== Footer: Circular Text =================== */
-/* Storlek och responsivitet för SVG-behållaren */
-.footer-logo-svg {
-  width: clamp(160px, 22vw, 260px);
-  height: clamp(160px, 22vw, 260px);
-  display: block;
-}
-
-/* Rotera endast gruppen med text – centrera mot viewBox */
-.footer-logo-svg .text-ring {
-  transform-box: view-box;
-  transform-origin: 100px 100px; /* center i viewBox 200x200 */
-}
-
-/* Fallback för motorer som inte stödjer transform-box:view-box */
-@supports not (transform-box: view-box) {
-  .footer-logo-svg .text-ring {
-    transform-origin: 50% 50%;
-    transform-box: fill-box;
-  }
-}
-
-/* Typografi: låt din font ärvas – nolla letter-spacing så textLength styr */
-.footer-logo-svg .ring-text {
-  font: inherit;
-  letter-spacing: 0;
-  text-transform: inherit;
-  font-size: clamp(9px, 1.2vw, 12px);
-}
-
-/* Lägen för rörelse */
-.spin-loop .text-ring {
-  animation: spin var(--ring-speed, 18s) linear infinite;
-}
-
-.spin-pingpong .text-ring {
-  animation: spin var(--ring-speed, 18s) ease-in-out infinite alternate;
-}
-
-/* 360° varv */
-@keyframes spin {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
-}
-
-/* Tillgänglighet: respektera reducerad rörelse */
-@media (prefers-reduced-motion: reduce) {
-  .spin-loop .text-ring,
-  .spin-pingpong .text-ring {
-    animation: none;
-  }
-}
-
 /* =================== Video Popup Card =================== */
 
 /* Popup styling */
@@ -3328,95 +3208,174 @@ a {
 /* =================== Footer Styling =================== */
 
 .footer {
-    background-color: #12111F;
-    color: #fff;
-    padding: 40px 20px;
-    text-align: center;
-    position: relative;
-    width: 100%; /* Säkerställ att sektionen alltid är 100% bred */
-    background-image: url('bilder/sectionsbackground.webp'); /* Ange sökvägen till din bild */
-    background-size: 50%; /* Gör bakgrundsbilden 50% mindre */
-    background-position: center; /* Centrerar bakgrundsbilden */
-    background-repeat: no-repeat; /* Hindrar bakgrundsbilden från att upprepas */
+  background-color: #12111F;
+  color: #fff;
+  padding: 40px 20px;
+  text-align: center;
+  position: relative;
+  width: 100%;
+  background-image: url('bilder/sectionsbackground.webp');
+  background-size: 50%;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .footer-logo-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    margin-bottom: 120px;
-    margin-top: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  margin-bottom: 120px;
+  margin-top: 50px;
 }
 
+/* Mittenloggan står still */
 .footer-logo-circle {
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100px;
-    height: 100px;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 100px;
 }
 
 .footer-logo-img {
-    width: 50px;
-    height: 50px;
-    position: absolute;
+  width: 50px;
+  height: 50px;
+  position: absolute;
 }
 
+/* =================== Footer: Circular Text =================== */
+/* Centrera SVG över mittenloggan och gör den responsiv */
 .footer-logo-svg {
-    width: 200px;
-    height: 200px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  width: clamp(160px, 22vw, 260px);
+  height: clamp(160px, 22vw, 260px);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: block;
+  overflow: visible; /* förhindrar att Safari klipper texten */
 }
 
-.footer-logo-svg text {
-    fill: #fff;
-    font-size: 12px;
-    letter-spacing: 3px;
+/* RING-TEXT: låt din globala font gälla och nolla spacing */
+.footer-logo-svg .ring-text {
+  font: inherit;
+  letter-spacing: 0;      /* viktigt: låt textLength styra fördelningen */
+  text-transform: inherit;
+  font-size: clamp(9px, 1.2vw, 12px);
+  fill: #fff;             /* ersätter tidigare .footer-logo-svg text { fill } */
 }
+
+/* INGA CSS-ANIMATIONER här – rotation sköts av <animateTransform> i SVG */
+
+/* =================== Footer content =================== */
 
 .footer-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
 }
 
 .footer-card {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 15px;
-    margin: 20px auto;
-    padding: 10px 20px;
-    color: #fff;
-    max-width: 100%;
-    transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 15px;
+  margin: 20px auto;
+  padding: 10px 20px;
+  color: #fff;
+  max-width: 100%;
+  transition: all 0.3s ease;
 }
 
 .footer-icon {
-    width: 20px;
-    height: auto;
-    margin: 0 5px;
-    vertical-align: middle;
-}
-
-.footer-copyright {
-    font-size: 12px;
-    color: rgba(255, 255, 255, 0.5);
-    margin-top: 10px;
+  width: 20px;
+  height: auto;
+  margin: 0 5px;
+  vertical-align: middle;
 }
 
 .footer .footer-logo img {
-    width: 15px;
-    height: auto;
-    display: inline-block;
-    margin: 0 10px;
-    align-items: center;
+  width: 15px;
+  height: auto;
+  display: inline-block;
+  margin: 0 10px;
+  align-items: center;
 }
+
+.footeropyright,
+.footer-copyright {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+  margin-top: 10px;
+}
+
+/* =================== Popup footer & social =================== */
+
+.popup-footer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: left;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.footer-section h3,
+.footer-social h3 {
+  text-align: center;
+  width: 100%;
+}
+
+.footer-social {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.social-media-icons {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  padding: 0;
+}
+
+.social-media-icons li { display: inline-block; }
+
+.social-media-icons a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.1);
+  transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.social-media-icons a img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.social-media-icons a:hover {
+  background-color: rgba(145, 71, 255, 0.8);
+  transform: scale(1.1);
+  box-shadow: 0 4px 15px rgba(145, 71, 255, 0.5);
+}
+
+.popup-footer p,
+.popup-footer a {
+  margin: 5px 0;
+}
+
 
 /* =================== Global Button Styling =================== */
 
@@ -4178,6 +4137,7 @@ a {
         right: -120px; /* Justera placeringen av högra linjen */
     }
 }
+
 
 
 
