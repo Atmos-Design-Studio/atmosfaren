@@ -920,26 +920,36 @@
     <!-- SVG: endast texten roterar. Loggan står still -->
     <svg
       class="footer-logo-svg"
-      data-speed="22"
-      data-mode="loop"
       viewBox="0 0 200 200"
       aria-label="Atmos Design Studio Stockholm Sweden"
       xmlns="http://www.w3.org/2000/svg"
-      xmlns:xlink="http://www.w3.org/1999/xlink"
     >
       <defs>
-        <!-- radius 60 -->
+        <!-- radius 60  omkrets ≈ 377 -->
         <path id="circlePath"
-              d="M100,100 m-60,0 a60,60 0 1,1 120,0 a60,60 0 1,1 -120,0" />
+              d="M100,100 m-60,0 a60,60 0 1,1 120,0 a60,60 0 1,1 -120,0"
+              pathLength="377"/>
       </defs>
-
-      <!-- Roteras med CSS -->
-      <g class="text-ring">
+    
+      <!-- rotera endast denna grupp runt centrum -->
+      <g class="text-ring" transform="rotate(0 100 100)">
         <text class="ring-text">
-          <textPath href="#circlePath" xlink:href="#circlePath" startOffset="0%">
-            • Atmos Design Studio • Stockholm • Sweden • Atmos Design Studio • Stockholm • Sweden •
+          <textPath href="#circlePath"
+                    startOffset="0%"
+                    lengthAdjust="spacing"
+                    textLength="377">
+            • Atmos Design Studio • Stockholm • Sweden •
           </textPath>
         </text>
+    
+        <!-- 1) kontinuerlig rotation  ändra dur för fart -->
+        <animateTransform
+          attributeName="transform"
+          type="rotate"
+          from="0 100 100"
+          to="360 100 100"
+          dur="24s"
+          repeatCount="indefinite"/>
       </g>
     </svg>
 
@@ -3282,6 +3292,7 @@
 </body>
 
 </html>
+
 
 
 
