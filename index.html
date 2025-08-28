@@ -918,25 +918,41 @@
 <footer class="footer custom-section section-to-animate">
   <div class="footer-logo-container">
     <!-- SVG: endast texten roterar. Loggan står still -->
-    <svg
-      class="footer-logo-svg"
-      viewBox="0 0 200 200"
-      aria-label="Atmos Design Studio Stockholm Sweden"
-      xmlns="http://www.w3.org/2000/svg"
-      xmlns:xlink="http://www.w3.org/1999/xlink"
-    >
-      <defs>
-        <path id="circlePath" d="M100,100 m-60,0 a60,60 0 1,1 120,0 a60,60 0 1,1 -120,0"/>
-      </defs>
+    <!-- endast texten snurrar -->
+<svg
+  class="footer-logo-svg"
+  viewBox="0 0 200 200"
+  aria-label="Atmos Design Studio Stockholm Sweden"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <defs>
+    <!-- radius 60  omkrets ≈ 377 -->
+    <path id="circlePath"
+          d="M100,100 m-60,0 a60,60 0 1,1 120,0 a60,60 0 1,1 -120,0"
+          pathLength="377"/>
+  </defs>
 
-      <g class="text-ring">
-        <text class="ring-text">
-          <textPath xlink:href="#circlePath" startOffset="0%">
-            • Atmosfären Design Studio • Stockholm • Sweden • 
-          </textPath>
-        </text>
-      </g>
-    </svg>
+  <!-- rotera endast denna grupp runt centrum -->
+  <g class="text-ring" transform="rotate(0 100 100)">
+    <text class="ring-text">
+      <textPath href="#circlePath"
+                startOffset="0%"
+                lengthAdjust="spacing"
+                textLength="377">
+        Atmos Design Studio • Stockholm • Sweden • 
+      </textPath>
+    </text>
+
+    <!-- 1) kontinuerlig rotation  ändra dur för fart -->
+    <animateTransform
+      attributeName="transform"
+      type="rotate"
+      from="0 100 100"
+      to="360 100 100"
+      dur="24s"
+      repeatCount="indefinite"/>
+  </g>
+</svg>
 
     <div class="footer-logo-circle">
       <img src="bilder/atmos3.webp" alt="Atmos Design Studio Logo" class="footer-logo-img">
@@ -3348,6 +3364,7 @@ document.addEventListener('DOMContentLoaded', () => {
 </body>
 
 </html>
+
 
 
 
