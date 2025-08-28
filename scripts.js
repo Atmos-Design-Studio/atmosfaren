@@ -3,47 +3,64 @@ console.log("JavaScript-fil laddad korrekt");
 // =====================
 // Footer Rotating Text
 // =====================
-document.addEventListener('DOMContentLoaded', function () {
-  const svg = document.querySelector('.footer-logo-svg');
+document.addEventListener('DOMContentLoaded', () => {
+  const svg  = document.querySelector('.footer-logo-svg');
   if (!svg) return;
 
-  const tp = svg.querySelector('textPath');
-  if (!tp) return;
+  const path = svg.querySelector('#circlePath');
+  const tp   = svg.querySelector('textPath');
+  if (!path || !tp) return;
 
-  // respekt för reduced motion
-  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reduce) return;
+  // Detektera motor
+  const ua = navigator.userAgent;
+  const isFirefox = ua.includes('Firefox/');
+  const isSafari  = /^((?!chrome|android).)*safari/i.test(ua);
 
-  const speed = parseFloat(svg.dataset.speed || '18'); // sek per varv
-  const mode  = (svg.dataset.mode || 'loop').toLowerCase(); // loop eller pingpong
+  // Räkna faktisk längd på banan
+  const L = path.getTotalLength();
 
-  let dir = 1;        // 1 framåt  -1 bakåt
-  let offset = 0;     // i procent 0 till 100
-  let last = performance.now();
+  // Normalisera banlängd för alla
+  path.setAttribute('pathLength', L);
 
-  function tick(now) {
-    const dt = (now - last) / 1000;  // sek
-    last = now;
-
-    // 100 procent per varv
-    const delta = (100 / speed) * dt * dir;
-    offset += delta;
-
-    if (mode === 'loop') {
-      // linda runt
-      if (offset >= 100) offset -= 100;
-      if (offset < 0) offset += 100;
-    } else {
-      // pingpong
-      if (offset >= 100) { offset = 100; dir = -1; }
-      if (offset <= 0)   { offset = 0;   dir =  1; }
-    }
-
-    tp.setAttribute('startOffset', offset + '%');
-    requestAnimationFrame(tick);
+  // Fyll cirkeln kant i kant i Firefox
+  if (isFirefox) {
+    tp.setAttribute('lengthAdjust', 'spacing');  // justera mellanrum inte glyph-storlek
+    tp.setAttribute('textLength',  String(L));   // exakt lika med pathLength
+  } else {
+    // I WebKit iOS kan textLength ge buggen där tecken försvinner
+    tp.removeAttribute('textLength');
+    tp.removeAttribute('lengthAdjust');
   }
 
-  requestAnimationFrame(tick);
+  // respekt för användarinställning
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  // Animation av startOffset  stabil i alla motorer
+  const speed = parseFloat(svg.dataset.speed || '22');   // sek per varv
+  const mode  = (svg.dataset.mode || 'loop').toLowerCase();
+  let dir = 1;        // riktning
+  let off = 0;        // 0..100 %
+  let last = performance.now();
+
+  function frame(now){
+    const dt = (now - last) / 1000;
+    last = now;
+
+    const delta = 100 * dt / speed * dir; // % per sekund
+    off += delta;
+
+    if (mode === 'loop') {
+      if (off >= 100) off -= 100;
+      if (off < 0)    off += 100;
+    } else {
+      if (off >= 100) { off = 100; dir = -1; }
+      if (off <= 0)   { off = 0;   dir =  1; }
+    }
+
+    tp.setAttribute('startOffset', off + '%');
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
 });
 
 // =====================
@@ -1034,6 +1051,7 @@ document.addEventListener("DOMContentLoaded", () => {
         console.error('Error during initialization:', error);
     }
 });
+
 
 
 
