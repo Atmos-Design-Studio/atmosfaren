@@ -6,21 +6,44 @@ console.log("JavaScript-fil laddad korrekt");
 document.addEventListener('DOMContentLoaded', function () {
   const svg = document.querySelector('.footer-logo-svg');
   if (!svg) return;
-  const ring = svg.querySelector('.text-ring');
-  if (!ring) return;
 
-  const speed = parseFloat(svg.dataset.speed || '18');
-  const mode  = (svg.dataset.mode || '').toLowerCase(); // "loop" eller "pingpong"
+  const tp = svg.querySelector('textPath');
+  if (!tp) return;
 
-  ring.style.animationDuration = speed + 's';
+  // respekt för reduced motion
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce) return;
 
-  if (mode === 'loop') {
-    svg.classList.remove('spin-pingpong');
-    svg.classList.add('spin-loop');
-  } else if (mode === 'pingpong') {
-    svg.classList.remove('spin-loop');
-    svg.classList.add('spin-pingpong');
+  const speed = parseFloat(svg.dataset.speed || '18'); // sek per varv
+  const mode  = (svg.dataset.mode || 'loop').toLowerCase(); // loop eller pingpong
+
+  let dir = 1;        // 1 framåt  -1 bakåt
+  let offset = 0;     // i procent 0 till 100
+  let last = performance.now();
+
+  function tick(now) {
+    const dt = (now - last) / 1000;  // sek
+    last = now;
+
+    // 100 procent per varv
+    const delta = (100 / speed) * dt * dir;
+    offset += delta;
+
+    if (mode === 'loop') {
+      // linda runt
+      if (offset >= 100) offset -= 100;
+      if (offset < 0) offset += 100;
+    } else {
+      // pingpong
+      if (offset >= 100) { offset = 100; dir = -1; }
+      if (offset <= 0)   { offset = 0;   dir =  1; }
+    }
+
+    tp.setAttribute('startOffset', offset + '%');
+    requestAnimationFrame(tick);
   }
+
+  requestAnimationFrame(tick);
 });
 
 // =====================
@@ -1011,6 +1034,7 @@ document.addEventListener("DOMContentLoaded", () => {
         console.error('Error during initialization:', error);
     }
 });
+
 
 
 
