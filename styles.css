@@ -3205,8 +3205,7 @@ a {
 }
 
 
-/* =================== Footer: Bas =================== */
-
+/* =================== Footer Styling =================== */
 .footer {
   background-color: #12111F;
   color: #fff;
@@ -3229,7 +3228,6 @@ a {
   margin-top: 50px;
 }
 
-/* Mittenloggan står still */
 .footer-logo-circle {
   position: absolute;
   display: flex;
@@ -3243,44 +3241,22 @@ a {
   width: 50px;
   height: 50px;
   position: absolute;
-  image-rendering: auto;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
 }
 
-/* =================== Footer: Cirkulär text =================== */
-
-.footer-logo-svg{
-  width: clamp(160px, 22vw, 260px);
-  height: clamp(160px, 22vw, 260px);
+.footer-logo-svg {
+  width: 200px;
+  height: 200px;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  display: block;
-  overflow: visible;                 /* viktigt för Safari iOS */
-  pointer-events: none;
-  contain: layout paint;             /* NYTT ger jämnare render i Chromium */
 }
 
-.footer-logo-svg .ring-text{
-  font: inherit;
-  font-size: clamp(9px, 1.2vw, 12px);
-  letter-spacing: 0;
-  text-transform: inherit;
+.footer-logo-svg text {
   fill: #fff;
-
-  /* jämnare text i alla motorer */
-  text-rendering: geometricPrecision;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  font-kerning: normal;
-  font-variant-ligatures: none;
-  -webkit-text-size-adjust: 100%;    /* NYTT för iOS */
-  text-size-adjust: 100%;            /* NYTT för andra motorer */
+  font-size: 12px;
+  letter-spacing: 3px;
 }
-
-/* =================== Footer: Innehåll =================== */
 
 .footer-content {
   display: flex;
@@ -3321,8 +3297,7 @@ a {
   margin-top: 10px;
 }
 
-/* =================== Popup footer och social =================== */
-
+/* Ensure the popup-footer is centered and aligned properly */
 .popup-footer {
   display: flex;
   flex-direction: column;
@@ -3339,6 +3314,7 @@ a {
   width: 100%;
 }
 
+/* Center the social media icons horizontally */
 .footer-social {
   display: flex;
   flex-direction: column;
@@ -3382,8 +3358,57 @@ a {
 }
 
 .popup-footer p,
-.popup-footer a {
-  margin: 5px 0;
+.popup-footer a { margin: 5px 0; }
+
+/* =================== Footer: Circular Text =================== */
+/* Storlek och responsivitet för SVG-behållaren */
+.footer-logo-svg { 
+  width: clamp(160px, 22vw, 260px);
+  height: clamp(160px, 22vw, 260px);
+  display: block;
+}
+
+/* Rotera endast gruppen med text – centrera mot viewBox */
+.footer-logo-svg .text-ring {
+  transform-box: view-box;
+  transform-origin: 100px 100px; /* center i viewBox 200x200 */
+}
+
+/* Fallback för motorer som inte stödjer transform-box:view-box */
+@supports not (transform-box: view-box) {
+  .footer-logo-svg .text-ring {
+    transform-origin: 50% 50%;
+    transform-box: fill-box;
+  }
+}
+
+/* Typografi: låt din font ärvas – nolla letter-spacing så ringen blir jämn */
+.footer-logo-svg .ring-text {
+  font: inherit;
+  letter-spacing: 0;
+  text-transform: inherit;
+  font-size: clamp(9px, 1.2vw, 12px);
+}
+
+/* Lägen för rörelse */
+.spin-loop .text-ring {
+  animation: spin var(--ring-speed, 18s) linear infinite;
+}
+
+.spin-pingpong .text-ring {
+  animation: spin var(--ring-speed, 18s) ease-in-out infinite alternate;
+}
+
+/* 360° varv */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* Tillgänglighet */
+@media (prefers-reduced-motion: reduce) {
+  .spin-loop .text-ring,
+  .spin-pingpong .text-ring { animation: none; }
 }
 
 
@@ -4147,6 +4172,7 @@ a {
         right: -120px; /* Justera placeringen av högra linjen */
     }
 }
+
 
 
 
