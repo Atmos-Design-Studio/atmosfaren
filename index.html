@@ -983,17 +983,44 @@
 
 <!-- Visa innehåll efter intro-animation som tidigare -->
 <script>
-  (function () {
-    function showContent() {
-      var main = document.getElementById('main-content');
-      var intro = document.getElementById('intro-animation');
-      if (main) main.style.display = '';
-      if (intro) intro.style.display = 'none';
+  // Vänta på DOM
+  document.addEventListener('DOMContentLoaded', function () {
+    var main  = document.getElementById('main-content');
+    var intro = document.getElementById('intro-animation');
+    if (!main || !intro) return;
+
+    // Visa intro direkt. Dölj main medan intro spelas
+    intro.style.display = '';
+    main.style.display = 'none';
+
+    // Respekt för reduced motion
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      intro.style.display = 'none';
+      main.style.display = '';
+      return;
     }
-    document.addEventListener('DOMContentLoaded', showContent);
-    setTimeout(showContent, 3000);
-  })();
+
+    // När intro animationen är klar. Visa main
+    var done = function () {
+      main.style.display = '';
+      intro.style.display = 'none';
+      cleanup();
+    };
+    var onEnd = function () { done(); };
+    var cleanup = function () {
+      intro.removeEventListener('animationend', onEnd);
+      intro.removeEventListener('transitionend', onEnd);
+      clearTimeout(fallback);
+    };
+
+    intro.addEventListener('animationend', onEnd);
+    intro.addEventListener('transitionend', onEnd);
+
+    // Fallback ifall inget event triggas
+    var fallback = setTimeout(done, 3000);
+  });
 </script>
+
 
 <!-- Popup for About (Atmos) -->
 <div id="about-popup" class="project-popup">
@@ -3310,6 +3337,7 @@
 </body>
 
 </html>
+
 
 
 
