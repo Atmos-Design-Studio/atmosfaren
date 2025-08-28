@@ -923,26 +923,32 @@
       viewBox="0 0 200 200"
       aria-label="Atmos Design Studio Stockholm Sweden"
       xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
     >
       <defs>
         <!-- radius 60  omkrets ≈ 377 -->
         <path id="circlePath"
-              d="M100,100 m-60,0 a60,60 0 1,1 120,0 a60,60 0 1,1 -120,0"/>
+              d="M100,100 m-60,0 a60,60 0 1,1 120,0 a60,60 0 1,1 -120,0"
+              pathLength="377"/>
       </defs>
 
       <!-- rotera endast denna grupp runt centrum -->
       <g class="text-ring" transform="rotate(0 100 100)">
         <text class="ring-text">
-          <!-- JS fyller på text automatiskt så hela cirkeln täcks -->
-          <textPath id="ringTextPath" href="#circlePath"
-                    startOffset="0%">
+          <textPath
+            href="#circlePath"
+            xlink:href="#circlePath"
+            startOffset="0%"
+            lengthAdjust="spacing"
+            textLength="377"
+            data-base="Atmosfären • Design Studio • Stockholm • Sweden • "
+          >
             Atmosfären • Design Studio • Stockholm • Sweden •
           </textPath>
         </text>
 
-        <!-- kontinuerlig rotation  justera dur för fart -->
+        <!-- 1) kontinuerlig rotation  ändra dur för fart -->
         <animateTransform
-          id="ringSpin"
           attributeName="transform"
           type="rotate"
           from="0 100 100"
@@ -953,7 +959,7 @@
     </svg>
 
     <div class="footer-logo-circle">
-      <img src="bilder/atmos3.webp" alt="Atmos Design Studio Logo" class="footer-logo-img">
+      <img src="bilder/atmos3.webp" alt="Atmos Design Studio Logo" class="footer-logo-img" aria-hidden="true">
     </div>
   </div>
 
@@ -975,8 +981,8 @@
   </div>
 </footer>
 
+<!-- Visa innehåll efter intro-animation som tidigare -->
 <script>
-  // Visa innehåll snabbt efter laddning  samma som tidigare
   (function () {
     function showContent() {
       var main = document.getElementById('main-content');
@@ -3304,6 +3310,7 @@
 </body>
 
 </html>
+
 
 
 
