@@ -3229,7 +3229,7 @@ a {
   margin-top: 50px;
 }
 
-/* Loggan i mitten står still */
+/* Mittenloggan står still */
 .footer-logo-circle {
   position: absolute;
   display: flex;
@@ -3243,7 +3243,6 @@ a {
   width: 50px;
   height: 50px;
   position: absolute;
-  /* visuell skärpa under SVG-rörelse */
   image-rendering: auto;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
@@ -3251,8 +3250,7 @@ a {
 
 /* =================== Footer: Cirkulär text =================== */
 
-/* SVG placeras över mittenloggan och är responsiv */
-.footer-logo-svg {
+.footer-logo-svg{
   width: clamp(160px, 22vw, 260px);
   height: clamp(160px, 22vw, 260px);
   position: absolute;
@@ -3260,30 +3258,24 @@ a {
   left: 50%;
   transform: translate(-50%, -50%);
   display: block;
-  overflow: visible;                 /* fixar klipp i Safari iOS */
-  pointer-events: none;              /* inget klickfång */
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
+  overflow: visible;                /* hindrar klipp i Safari iOS */
+  pointer-events: none;
 }
 
-/* Själva ringtexten. Låt textLength styra avståndet mellan tecken */
-.footer-logo-svg .ring-text {
+.footer-logo-svg .ring-text{
   font: inherit;
   font-size: clamp(9px, 1.2vw, 12px);
-  letter-spacing: 0;
+  letter-spacing: 0;                /* låt motorn sköta spacing */
   text-transform: inherit;
   fill: #fff;
 
-  /* Jämn rendering i Edge och Safari under rotation */
+  /* jämnare text i alla motorer */
   text-rendering: geometricPrecision;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-kerning: normal;
+  font-variant-ligatures: none;
 }
-
-/* Inga CSS-keyframes för rotation.
-   Rörelsen sker med <animateTransform> i SVG:n
-   vilket är stabilt i Safari Edge Firefox och Chrome */
 
 /* =================== Footer: Innehåll =================== */
 
@@ -4152,6 +4144,7 @@ a {
         right: -120px; /* Justera placeringen av högra linjen */
     }
 }
+
 
 
 
