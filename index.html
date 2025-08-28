@@ -3292,60 +3292,12 @@
     <button id="close-popup" data-translate="closeButton">Stäng</button>
 </div>
 
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const svg  = document.querySelector('.footer-logo-svg');
-  if (!svg) return;
-
-  const path = svg.querySelector('#circlePath');
-  const tp   = svg.querySelector('textPath');
-  const anim = svg.querySelector('animateTransform');
-  if (!path || !tp || !anim) return;
-
-  const ua = navigator.userAgent;
-  const isFirefox = /Firefox\//.test(ua);
-  const isSafari  = /Safari/.test(ua) && !/Chrome|Chromium|Edg\//.test(ua);
-  const isChromium = /Chrome|Chromium|Edg\//.test(ua);
-
-  // Mät faktisk längd och normalisera
-  const L = path.getTotalLength();
-  path.setAttribute('pathLength', L.toFixed(2));
-
-  // Nollställ så vi börjar rent
-  tp.removeAttribute('textLength');
-  tp.removeAttribute('lengthAdjust');
-
-  if (isFirefox) {
-    // fyll cirkeln exakt utan glapp
-    const fudge = 0.9985; // finjustera vid behov
-    tp.setAttribute('lengthAdjust', 'spacingAndGlyphs');
-    tp.setAttribute('textLength',  (L * fudge).toFixed(2));
-  } else if (isChromium) {
-    // stabil storlek på tecken i rörelse
-    tp.setAttribute('lengthAdjust', 'spacing');
-    tp.setAttribute('textLength',  L.toFixed(2));
-  } else if (isSafari) {
-    // Safari iOS buggar bort glyphs om textLength används
-    tp.removeAttribute('textLength');
-    tp.removeAttribute('lengthAdjust');
-  }
-
-  // Hastighet kan styras via data-speed på svg, standard 24s
-  const speed = parseFloat(svg.dataset.speed || '24');
-  anim.setAttribute('dur', speed + 's');
-
-  // Respektera reduced motion
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    try { svg.pauseAnimations(); } catch(e) {}
-  }
-});
-</script>
-
     <script src="scripts.js" title="Dennis Lantz Portfolio - UX/UI Design & Development"></script>
 
 </body>
 
 </html>
+
 
 
 
