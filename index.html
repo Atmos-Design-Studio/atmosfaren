@@ -935,19 +935,12 @@
       <!-- rotera endast denna grupp runt centrum -->
       <g class="text-ring" transform="rotate(0 100 100)">
         <text class="ring-text">
-          <textPath
-            href="#circlePath"
-            xlink:href="#circlePath"
-            startOffset="0%"
-            lengthAdjust="spacing"
-            textLength="377"
-            data-base="Atmosfären • Design Studio • Stockholm • Sweden • "
-          >
-            Atmosfären • Design Studio • Stockholm • Sweden •
+          <textPath href="#circlePath" xlink:href="#circlePath" startOffset="0%" lengthAdjust="spacing" textLength="377">
+            Atmosfären • Design Studio • Stockholm • Sweden • Atmosfären • Design Studio • Stockholm • Sweden •
           </textPath>
         </text>
 
-        <!-- 1) kontinuerlig rotation  ändra dur för fart -->
+        <!-- kontinuerlig rotation  dur oförändrad -->
         <animateTransform
           attributeName="transform"
           type="rotate"
@@ -959,7 +952,7 @@
     </svg>
 
     <div class="footer-logo-circle">
-      <img src="bilder/atmos3.webp" alt="Atmos Design Studio Logo" class="footer-logo-img" aria-hidden="true">
+      <img src="bilder/atmos3.webp" alt="Atmos Design Studio Logo" class="footer-logo-img">
     </div>
   </div>
 
@@ -981,6 +974,18 @@
   </div>
 </footer>
 
+<script>
+  (function () {
+    function showContent() {
+      var main = document.getElementById('main-content');
+      var intro = document.getElementById('intro-animation');
+      if (main) main.style.display = '';
+      if (intro) intro.style.display = 'none';
+    }
+    document.addEventListener('DOMContentLoaded', showContent);
+    setTimeout(showContent, 3000);
+  })();
+</script>
 
 <!-- Popup for About (Atmos) -->
 <div id="about-popup" class="project-popup">
@@ -3297,6 +3302,7 @@
 </body>
 
 </html>
+
 
 
 
