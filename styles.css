@@ -2764,10 +2764,10 @@ a {
 
 /* Typografi: låt din font ärvas – nolla letter-spacing så textLength styr */
 .footer-logo-svg .ring-text {
-  font: inherit;          /* använd din globala font */
-  letter-spacing: 0;      /* viktigt: undvik extra mellanrum (orsak till dubbelt/ojämnt) */
+  font: inherit;
+  letter-spacing: 0;
   text-transform: inherit;
-  font-size: clamp(9px, 1.2vw, 12px); /* responsiv storlek utan att spräcka banan */
+  font-size: clamp(9px, 1.2vw, 12px);
 }
 
 /* Lägen för rörelse */
@@ -4178,6 +4178,7 @@ a {
         right: -120px; /* Justera placeringen av högra linjen */
     }
 }
+
 
 
 
