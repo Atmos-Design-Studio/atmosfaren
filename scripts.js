@@ -9,28 +9,55 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const path = svg.querySelector('#circlePath');
   const tp   = svg.querySelector('textPath');
-  if (!path || !tp) return;
+  const anim = svg.querySelector('animateTransform');
+  if (!path || !tp || !anim) return;
 
-  // Detektera motor
+  // motor-detektion
   const ua = navigator.userAgent;
-  const isFirefox = ua.includes('Firefox/');
-  const isSafari  = /^((?!chrome|android).)*safari/i.test(ua);
+  const isFirefox = /Firefox\//.test(ua);
+  const isSafari  = /Safari/.test(ua) && !/Chrome|Chromium|Edg\//.test(ua);
+  const isChromium = /Chrome|Chromium|Edg\//.test(ua);
 
-  // Räkna faktisk längd på banan
+  // faktisk längd på banan
   const L = path.getTotalLength();
+  path.setAttribute('pathLength', L.toFixed(2));
 
-  // Normalisera banlängd för alla
-  path.setAttribute('pathLength', L);
+  // nollställ först
+  tp.removeAttribute('textLength');
+  tp.removeAttribute('lengthAdjust');
 
-  // Fyll cirkeln kant i kant i Firefox
+  // Firefox. fyll exakt runt utan glapp
   if (isFirefox) {
-    tp.setAttribute('lengthAdjust', 'spacing');  // justera mellanrum inte glyph-storlek
-    tp.setAttribute('textLength',  String(L));   // exakt lika med pathLength
-  } else {
-    // I WebKit iOS kan textLength ge buggen där tecken försvinner
+    // liten justering för att undvika wrap. tweak vid behov
+    const fudge = 0.9985;
+    tp.setAttribute('lengthAdjust', 'spacingAndGlyphs');
+    tp.setAttribute('textLength', (L * fudge).toFixed(2));
+  }
+
+  // Chromium. jämn storlek på tecken under rörelse
+  if (isChromium) {
+    tp.setAttribute('lengthAdjust', 'spacing');
+    tp.setAttribute('textLength', L.toFixed(2));
+  }
+
+  // Safari iOS. undvik buggen där tecken försvinner
+  if (isSafari) {
+    // inga textLength-attribut alls
     tp.removeAttribute('textLength');
     tp.removeAttribute('lengthAdjust');
+    // säkra repaints
+    svg.style.willChange = 'transform';
   }
+
+  // fart. kan styras med data-speed på svg. annars 24 s
+  const speed = parseFloat(svg.dataset.speed || '24');
+  anim.setAttribute('dur', speed + 's');
+
+  // respektera reduced motion
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    try { svg.pauseAnimations(); } catch(e) {}
+  }
+});
 
   // respekt för användarinställning
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -1051,6 +1078,7 @@ document.addEventListener("DOMContentLoaded", () => {
         console.error('Error during initialization:', error);
     }
 });
+
 
 
 
