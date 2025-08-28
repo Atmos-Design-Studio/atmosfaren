@@ -917,48 +917,53 @@
 <!-- Footer Section -->
 <footer class="footer custom-section section-to-animate">
   <div class="footer-logo-container">
-      <!-- SVG: endast texten snurrar -->
-<svg
-  class="footer-logo-svg"
-  data-speed="24"
-  viewBox="0 0 200 200"
-  aria-label="Atmos Design Studio Stockholm Sweden"
-  xmlns="http://www.w3.org/2000/svg"
-  xmlns:xlink="http://www.w3.org/1999/xlink"
->
-  <defs>
-    <!-- Cirkelbana, pathLength sätts även i JS efter faktisk längd -->
-    <path
-      id="circlePath"
-      d="M100,100 m-60,0 a60,60 0 1,1 120,0 a60,60 0 1,1 -120,0"
-    />
-  </defs>
+    <!-- SVG: behåller din struktur -->
+    <svg
+      class="footer-logo-svg"
+      data-speed="22"              <!-- fart i sek per varv -->
+      data-mode="loop"            <!-- loop eller pingpong -->
+      viewBox="0 0 200 200"
+      aria-label="Atmos Design Studio Stockholm Sweden"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+    >
+      <defs>
+        <!-- radius 60  omkrets sätts även i JS -->
+        <path
+          id="circlePath"
+          d="M100,100 m-60,0 a60,60 0 1,1 120,0 a60,60 0 1,1 -120,0"
+          pathLength="377"
+        />
+      </defs>
 
-  <!-- Endast texten roterar runt centrum -->
-  <g class="text-ring" transform="rotate(0 100 100)">
-    <text class="ring-text">
-      <textPath
-        href="#circlePath"
-        xlink:href="#circlePath"
-        startOffset="0%"
-      >
-        • Atmos Design Studio • Stockholm • Sweden •
-      </textPath>
-    </text>
+      <!-- gruppen roterades tidigare med SMIL, vi behåller den men pausar via JS -->
+      <g class="text-ring" transform="rotate(0 100 100)">
+        <text class="ring-text">
+          <textPath
+            href="#circlePath"
+            xlink:href="#circlePath"
+            startOffset="0%"
+            lengthAdjust="spacing"
+            textLength="377"
+          >
+            • Atmos Design Studio • Stockholm • Sweden •
+          </textPath>
+        </text>
 
-    <!-- Kontinuerlig rotation. Ändra dur via data-speed i JS om du vill -->
-    <animateTransform
-      attributeName="transform"
-      type="rotate"
-      from="0 100 100"
-      to="360 100 100"
-      dur="24s"
-      repeatCount="indefinite"
-    />
-  </g>
-</svg>
+        <!-- lämnas kvar men pausas i JS för enhetligt beteende -->
+        <animateTransform
+          id="ring-anim"
+          attributeName="transform"
+          type="rotate"
+          from="0 100 100"
+          to="360 100 100"
+          dur="24s"
+          repeatCount="indefinite"
+        />
+      </g>
+    </svg>
 
-    <!-- Din statiska logga i mitten -->
+    <!-- Statisk logga i mitten -->
     <div class="footer-logo-circle">
       <img src="bilder/atmos3.webp" alt="Atmos Design Studio Logo" class="footer-logo-img">
     </div>
@@ -3297,6 +3302,7 @@
 </body>
 
 </html>
+
 
 
 
