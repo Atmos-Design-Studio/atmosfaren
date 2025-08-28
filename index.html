@@ -917,27 +917,29 @@
 <!-- Footer Section -->
 <footer class="footer custom-section section-to-animate">
   <div class="footer-logo-container">
-    <!-- SVG: endast texten roterar, loggan rör sig inte -->
-      <svg
-        class="footer-logo-svg"
-        viewBox="0 0 200 200"
-        aria-label="Atmos Design Studio Stockholm Sweden"
-        xmlns="http://www.w3.org/2000/svg"
-        xmlns:xlink="http://www.w3.org/1999/xlink"
-      >
-        <defs>
-          <path id="circlePath" d="M100,100 m-60,0 a60,60 0 1,1 120,0 a60,60 0 1,1 -120,0"/>
-        </defs>
-      
-        <!-- Endast denna grupp roteras -->
-        <g class="text-ring">
-          <text class="ring-text">
-            <textPath xlink:href="#circlePath" startOffset="0%">
-              Atmos Design Studio * Stockholm * Sweden * Atmos Design Studio * Stockholm * Sweden *
-            </textPath>
-          </text>
-        </g>
-      </svg>
+    <!-- SVG: endast texten snurrar -->
+    <svg
+      class="footer-logo-svg spin-loop"
+      viewBox="0 0 200 200"
+      aria-label="Atmos Design Studio Stockholm Sweden"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+    >
+      <defs>
+        <path id="circlePath" d="M100,100 m-60,0 a60,60 0 1,1 120,0 a60,60 0 1,1 -120,0"/>
+      </defs>
+
+      <!-- Endast denna grupp roteras -->
+      <g class="text-ring">
+        <text class="ring-text">
+          <textPath xlink:href="#circlePath" startOffset="0%">
+            Atmos Design Studio * Stockholm * Sweden * Atmos Design Studio * Stockholm * Sweden *
+          </textPath>
+        </text>
+      </g>
+    </svg>
+
+    <!-- Din statiska logga i mitten -->
     <div class="footer-logo-circle">
       <img src="bilder/atmos3.webp" alt="Atmos Design Studio Logo" class="footer-logo-img">
     </div>
@@ -946,9 +948,9 @@
   <div class="footer-content">
     <div class="footer-card">
       <p>
-        <span data-translate="footer_text">Cooked with passion in</span> 
+        <span data-translate="footer_text">Cooked with passion in</span>
         <img src="bilder/emoji2.webp" alt="Sverige Logo" class="footer-icon">
-        <span data-translate="footer_subtext">with</span> 
+        <span data-translate="footer_subtext">with</span>
         <img src="bilder/figma3.webp" alt="Figma Logo" class="footer-icon">
         <img src="bilder/ai3.webp" alt="AI Logo" class="footer-icon">
         <span>&</span>
@@ -3275,6 +3277,7 @@
 </body>
 
 </html>
+
 
 
 
