@@ -3260,7 +3260,7 @@ a {
   transform: translate(-50%, -50%);
   display: block;
   overflow: visible;                 /* fixar klipp i Safari iOS */
-  pointer-events: none;              /* inget klickfång */
+  pointer-events: none;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
 }
@@ -3268,11 +3268,10 @@ a {
 /* Själva ringtexten. Låt textLength styra avståndet mellan tecken */
 .footer-logo-svg .ring-text {
   font: inherit;
-  font-size: clamp(9px, 1.2vw, 12px); /* behåller din känsla */
+  font-size: clamp(9px, 1.2vw, 12px);
   letter-spacing: 0;
   text-transform: inherit;
   fill: #fff;
-
   text-rendering: geometricPrecision;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -3384,12 +3383,6 @@ a {
 .popup-footer a {
   margin: 5px 0;
 }
-
-/* Respekt för reduced motion. SMIL pausas i JS. */
-@media (prefers-reduced-motion: reduce) {
-  .footer-logo-svg .text-ring { will-change: auto; }
-}
-
 
 /* =================== Global Button Styling =================== */
 
@@ -4151,6 +4144,7 @@ a {
         right: -120px; /* Justera placeringen av högra linjen */
     }
 }
+
 
 
 
