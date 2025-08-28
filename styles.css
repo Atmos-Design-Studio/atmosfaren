@@ -2748,9 +2748,16 @@ a {
 }
 
 /* Rotera endast textgruppen kring viewBox centrum */
-.footer-logo-svg .text-ring {
-  transform-origin: 100px 100px;   /* matchar viewBox center */
-  transform-box: view-box;         /* korrekt referens */
+.footer-logo-svg .text-ring{
+  transform-box: view-box;
+  transform-origin: 100px 100px;
+}
+/* Fallback */
+@supports not (transform-box: view-box) {
+  .footer-logo-svg .text-ring{
+    transform-origin: 50% 50%;
+    transform-box: fill-box;
+  }
 }
 
 /* Ingen typografiförändring. Låt din befintliga stil gälla. */
@@ -3368,11 +3375,6 @@ a {
     fill: #fff;
     font-size: 12px;
     letter-spacing: 3px;
-}
-
-.footer-logo-svg textPath {
-    startOffset: 0%;
-    animation: rotateText 10s linear infinite;
 }
 
 .footer-content {
@@ -4174,5 +4176,6 @@ a {
         right: -120px; /* Justera placeringen av högra linjen */
     }
 }
+
 
 
