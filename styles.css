@@ -2740,56 +2740,58 @@ a {
     margin: 5px 0; /* Space between paragraphs and links */
 }
 
-/* Bas för SVG. Behåll din storlek om du vill. */
+/* =================== Footer: Circular Text =================== */
+/* Storlek och responsivitet för SVG-behållaren */
 .footer-logo-svg {
-  width: 240px;
-  height: 240px;
+  width: clamp(160px, 22vw, 260px);
+  height: clamp(160px, 22vw, 260px);
   display: block;
 }
 
-/* Rotera endast textgruppen kring viewBox centrum */
-.footer-logo-svg .text-ring{
+/* Rotera endast gruppen med text – centrera mot viewBox */
+.footer-logo-svg .text-ring {
   transform-box: view-box;
-  transform-origin: 100px 100px;
+  transform-origin: 100px 100px; /* center i viewBox 200x200 */
 }
-/* Fallback */
+
+/* Fallback för motorer som inte stödjer transform-box:view-box */
 @supports not (transform-box: view-box) {
-  .footer-logo-svg .text-ring{
+  .footer-logo-svg .text-ring {
     transform-origin: 50% 50%;
     transform-box: fill-box;
   }
 }
 
-/* Ingen typografiförändring. Låt din befintliga stil gälla. */
+/* Typografi: låt din font ärvas – nolla letter-spacing så textLength styr */
 .footer-logo-svg .ring-text {
-  font: inherit;
-  letter-spacing: inherit;
+  font: inherit;          /* använd din globala font */
+  letter-spacing: 0;      /* viktigt: undvik extra mellanrum (orsak till dubbelt/ojämnt) */
   text-transform: inherit;
+  font-size: clamp(9px, 1.2vw, 12px); /* responsiv storlek utan att spräcka banan */
 }
 
-/* Kontinuerlig rotation */
+/* Lägen för rörelse */
 .spin-loop .text-ring {
-  animation: spin 18s linear infinite;
+  animation: spin var(--ring-speed, 18s) linear infinite;
 }
 
-/* Pingpong fram och tillbaka mjukt */
 .spin-pingpong .text-ring {
-  animation: spin 18s ease-in-out infinite alternate;
+  animation: spin var(--ring-speed, 18s) ease-in-out infinite alternate;
 }
 
+/* 360° varv */
 @keyframes spin {
   from { transform: rotate(0deg); }
   to   { transform: rotate(360deg); }
 }
 
-/* Respekt för reducerad rörelse */
+/* Tillgänglighet: respektera reducerad rörelse */
 @media (prefers-reduced-motion: reduce) {
   .spin-loop .text-ring,
   .spin-pingpong .text-ring {
     animation: none;
   }
 }
-
 
 /* =================== Video Popup Card =================== */
 
@@ -4176,6 +4178,7 @@ a {
         right: -120px; /* Justera placeringen av högra linjen */
     }
 }
+
 
 
 
