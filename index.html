@@ -3297,72 +3297,9 @@
     <button id="close-popup" data-translate="closeButton">Stäng</button>
 </div>
 
-<!-- Footer rotating text: cross-browser fix -->
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const svg  = document.querySelector('.footer-logo-svg');
-  if (!svg) return;
-
-  // Pausa ev SMIL så vi inte får dubbelrörelse
-  try { svg.pauseAnimations(); } catch(e) {}
-
-  const path = svg.querySelector('#circlePath');
-  const tp   = svg.querySelector('textPath');
-  if (!path || !tp) return;
-
-  // Mät verklig längd och synka
-  const L = path.getTotalLength();
-  path.setAttribute('pathLength', L);
-
-  // Motorer
-  const ua = navigator.userAgent;
-  const isFirefox = ua.includes('Firefox/');
-  const isSafari  = /^((?!chrome|android).)*safari/i.test(ua);
-
-  // Firefox fyll cirkeln exakt utan att skala glyphs
-  if (isFirefox) {
-    tp.setAttribute('lengthAdjust', 'spacing');
-    tp.setAttribute('textLength', String(L));
-  } else {
-    // WebKit iOS undviker buggen där tecken försvinner
-    tp.removeAttribute('textLength');
-    tp.removeAttribute('lengthAdjust');
-  }
-
-  // Reduced motion
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-  // Animera startOffset  samma i alla motorer
-  const speed = parseFloat(svg.dataset.speed || '22');   // sek per varv
-  const mode  = (svg.dataset.mode || 'loop').toLowerCase();
-  let dir = 1;
-  let off = 0;                   // 0..100 %
-  let last = performance.now();
-
-  function frame(now){
-    const dt = (now - last) / 1000;
-    last = now;
-
-    const delta = 100 * dt / speed * dir; // procent per sekund
-    off += delta;
-
-    if (mode === 'loop') {
-      if (off >= 100) off -= 100;
-      if (off < 0)    off += 100;
-    } else {
-      if (off >= 100) { off = 100; dir = -1; }
-      if (off <= 0)   { off = 0;   dir =  1; }
-    }
-
-    tp.setAttribute('startOffset', off + '%');
-    requestAnimationFrame(frame);
-  }
-  requestAnimationFrame(frame);
-});
-</script>
-
     <script src="scripts.js" title="Dennis Lantz Portfolio - UX/UI Design & Development"></script>
 
 </body>
 
 </html>
+
