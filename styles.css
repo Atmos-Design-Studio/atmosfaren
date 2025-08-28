@@ -2740,6 +2740,50 @@ a {
     margin: 5px 0; /* Space between paragraphs and links */
 }
 
+/* Bas för SVG. Behåll din storlek om du vill. */
+.footer-logo-svg {
+  width: 240px;
+  height: 240px;
+  display: block;
+}
+
+/* Rotera endast textgruppen kring viewBox centrum */
+.footer-logo-svg .text-ring {
+  transform-origin: 100px 100px;   /* matchar viewBox center */
+  transform-box: view-box;         /* korrekt referens */
+}
+
+/* Ingen typografiförändring. Låt din befintliga stil gälla. */
+.footer-logo-svg .ring-text {
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+}
+
+/* Kontinuerlig rotation */
+.spin-loop .text-ring {
+  animation: spin 18s linear infinite;
+}
+
+/* Pingpong fram och tillbaka mjukt */
+.spin-pingpong .text-ring {
+  animation: spin 18s ease-in-out infinite alternate;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* Respekt för reducerad rörelse */
+@media (prefers-reduced-motion: reduce) {
+  .spin-loop .text-ring,
+  .spin-pingpong .text-ring {
+    animation: none;
+  }
+}
+
+
 /* =================== Video Popup Card =================== */
 
 /* Popup styling */
@@ -4130,4 +4174,5 @@ a {
         right: -120px; /* Justera placeringen av högra linjen */
     }
 }
+
 
