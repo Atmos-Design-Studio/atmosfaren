@@ -3258,14 +3258,15 @@ a {
   left: 50%;
   transform: translate(-50%, -50%);
   display: block;
-  overflow: visible;                /* hindrar klipp i Safari iOS */
+  overflow: visible;                 /* viktigt för Safari iOS */
   pointer-events: none;
+  contain: layout paint;             /* NYTT ger jämnare render i Chromium */
 }
 
 .footer-logo-svg .ring-text{
   font: inherit;
   font-size: clamp(9px, 1.2vw, 12px);
-  letter-spacing: 0;                /* låt motorn sköta spacing */
+  letter-spacing: 0;
   text-transform: inherit;
   fill: #fff;
 
@@ -3275,6 +3276,8 @@ a {
   -moz-osx-font-smoothing: grayscale;
   font-kerning: normal;
   font-variant-ligatures: none;
+  -webkit-text-size-adjust: 100%;    /* NYTT för iOS */
+  text-size-adjust: 100%;            /* NYTT för andra motorer */
 }
 
 /* =================== Footer: Innehåll =================== */
@@ -4144,6 +4147,7 @@ a {
         right: -120px; /* Justera placeringen av högra linjen */
     }
 }
+
 
 
 
