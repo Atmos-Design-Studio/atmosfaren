@@ -915,37 +915,48 @@
 </section>
 
 <!-- Footer Section -->
+<!-- Footer Section -->
 <footer class="footer custom-section section-to-animate">
-    <div class="footer-logo-container">
-        <!-- SVG för cirkeltext -->
-        <svg class="footer-logo-svg" viewBox="0 0 200 200">
-            <defs>
-                <path id="circlePath" d="M 100, 100 m -60, 0 a 60,60 0 1,1 120,0 a 60,60 0 1,1 -120,0" />
-            </defs>
-            <text>
-                <textPath xlink:href="#circlePath" startOffset="0%">
-                    Atmos Design Studio * Stockholm * Sweden *
-                </textPath>
-            </text>
-        </svg>
-        <div class="footer-logo-circle">
-            <img src="bilder/atmos3.webp" alt="Atmos Design Studio Logo" class="footer-logo-img">
-        </div>
+  <div class="footer-logo-container">
+    <!-- SVG: roterande text längs en cirkel -->
+    <svg class="footer-logo-svg spin-pingpong" viewBox="0 0 200 200" aria-label="Atmos Design Studio Stockholm Sweden">
+      <defs>
+        <!-- Cirkelbana -->
+        <path id="circlePath" d="M100,100 m-60,0 a60,60 0 1,1 120,0 a60,60 0 1,1 -120,0"/>
+      </defs>
+
+      <!-- Grupp som roteras -->
+      <g class="text-ring">
+        <text class="ring-text">
+          <textPath href="#circlePath" startOffset="0%">
+            Atmos Design Studio * Stockholm * Sweden * 
+            Atmos Design Studio * Stockholm * Sweden *
+          </textPath>
+        </text>
+      </g>
+    </svg>
+
+    <div class="footer-logo-circle">
+      <img src="bilder/atmos3.webp" alt="Atmos Design Studio Logo" class="footer-logo-img">
     </div>
-    <div class="footer-content">
-        <div class="footer-card">
-            <p>
-                <span data-translate="footer_text">Cooked with passion in</span> 
-                <img src="bilder/emoji2.webp" alt="Sverige Logo" class="footer-icon">
-                <span data-translate="footer_subtext">with</span> 
-                <img src="bilder/figma3.webp" alt="Figma Logo" class="footer-icon">,
-                <img src="bilder/ai3.webp" alt="AI Logo" class="footer-icon"> 
-                <span>&</span> 
-                <img src="bilder/code.webp" alt="Code Logo" class="footer-icon">
-            </p>
-        </div>
-        <p class="footer-copyright" data-translate="footer_copyright">© ADStudio 2025 The Future Is Now Old Man</p>
+  </div>
+
+  <div class="footer-content">
+    <div class="footer-card">
+      <p>
+        <span data-translate="footer_text">Cooked with passion in</span> 
+        <img src="bilder/emoji2.webp" alt="Sverige Logo" class="footer-icon">
+        <span data-translate="footer_subtext">with</span> 
+        <img src="bilder/figma3.webp" alt="Figma Logo" class="footer-icon">
+        <img src="bilder/ai3.webp" alt="AI Logo" class="footer-icon">
+        <span>&</span>
+        <img src="bilder/code.webp" alt="Code Logo" class="footer-icon">
+      </p>
     </div>
+    <p class="footer-copyright" data-translate="footer_copyright">
+      © ADStudio 2025 The Future Is Now Old Man
+    </p>
+  </div>
 </footer>
 
 <!-- Popup for About (Atmos) -->
@@ -3262,6 +3273,7 @@
 </body>
 
 </html>
+
 
 
 
