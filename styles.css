@@ -3205,7 +3205,7 @@ a {
 }
 
 
-/* =================== Footer Styling =================== */
+/* =================== Footer: Bas =================== */
 
 .footer {
   background-color: #12111F;
@@ -3229,7 +3229,7 @@ a {
   margin-top: 50px;
 }
 
-/* Mittenloggan står still */
+/* Loggan i mitten står still */
 .footer-logo-circle {
   position: absolute;
   display: flex;
@@ -3243,10 +3243,15 @@ a {
   width: 50px;
   height: 50px;
   position: absolute;
+  /* visuell skärpa under SVG-rörelse */
+  image-rendering: auto;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
-/* =================== Footer: Circular Text =================== */
-/* Centrera SVG över mittenloggan och gör den responsiv */
+/* =================== Footer: Cirkulär text =================== */
+
+/* SVG placeras över mittenloggan och är responsiv */
 .footer-logo-svg {
   width: clamp(160px, 22vw, 260px);
   height: clamp(160px, 22vw, 260px);
@@ -3255,21 +3260,32 @@ a {
   left: 50%;
   transform: translate(-50%, -50%);
   display: block;
-  overflow: visible; /* förhindrar att Safari klipper texten */
+  overflow: visible;                 /* fixar klipp i Safari iOS */
+  pointer-events: none;              /* inget klickfång */
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
-/* RING-TEXT: låt din globala font gälla och nolla spacing */
+/* Själva ringtexten. Låt textLength styra avståndet mellan tecken */
 .footer-logo-svg .ring-text {
   font: inherit;
-  letter-spacing: 0;      /* viktigt: låt textLength styra fördelningen */
-  text-transform: inherit;
   font-size: clamp(9px, 1.2vw, 12px);
-  fill: #fff;             /* ersätter tidigare .footer-logo-svg text { fill } */
+  letter-spacing: 0;
+  text-transform: inherit;
+  fill: #fff;
+
+  /* Jämn rendering i Edge och Safari under rotation */
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-kerning: normal;
 }
 
-/* INGA CSS-ANIMATIONER här – rotation sköts av <animateTransform> i SVG */
+/* Inga CSS-keyframes för rotation.
+   Rörelsen sker med <animateTransform> i SVG:n
+   vilket är stabilt i Safari Edge Firefox och Chrome */
 
-/* =================== Footer content =================== */
+/* =================== Footer: Innehåll =================== */
 
 .footer-content {
   display: flex;
@@ -3304,14 +3320,13 @@ a {
   align-items: center;
 }
 
-.footeropyright,
 .footer-copyright {
   font-size: 12px;
   color: rgba(255, 255, 255, 0.5);
   margin-top: 10px;
 }
 
-/* =================== Popup footer & social =================== */
+/* =================== Popup footer och social =================== */
 
 .popup-footer {
   display: flex;
@@ -4137,6 +4152,7 @@ a {
         right: -120px; /* Justera placeringen av högra linjen */
     }
 }
+
 
 
 
