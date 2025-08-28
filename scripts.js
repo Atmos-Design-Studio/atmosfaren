@@ -23,33 +23,6 @@ function handleNavbarScroll() {
 }
 
 // =====================
-// Footer circle animation
-// =====================
-  // Exempel: <svg class="footer-logo-svg spin-pingpong" data-speed="22" data-mode="pingpong">
-  (function () {
-    const svg = document.querySelector('.footer-logo-svg');
-    if (!svg) return;
-
-    const ring = svg.querySelector('.text-ring');
-    if (!ring) return;
-
-    const speed = parseFloat(svg.dataset.speed || '18'); // sekunder per varv
-    const mode  = (svg.dataset.mode || '').toLowerCase(); // "loop" eller "pingpong"
-
-    // Sätt varaktighet dynamiskt
-    ring.style.animationDuration = speed + 's';
-
-    // Växla läge dynamiskt
-    if (mode === 'loop') {
-      svg.classList.remove('spin-pingpong');
-      svg.classList.add('spin-loop');
-    } else if (mode === 'pingpong') {
-      svg.classList.remove('spin-loop');
-      svg.classList.add('spin-pingpong');
-    }
-  })();
-
-// =====================
 // Kopiera eamil
 // =====================
 function copyEmail() {
@@ -1015,6 +988,7 @@ document.addEventListener("DOMContentLoaded", () => {
         console.error('Error during initialization:', error);
     }
 });
+
 
 
 
