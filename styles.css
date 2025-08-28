@@ -2674,6 +2674,53 @@ a {
 }
 
 /* Ensure the popup-footer is centered and aligned properly */
+/* Bas för SVG och roterande grupp */
+.footer-logo-svg {
+  width: 240px; /* justera vid behov */
+  height: 240px;
+  display: block;
+}
+
+/* Säkerställ att rotation sker kring centrum i alla webbläsare */
+.text-ring {
+  transform-origin: 50% 50%;
+  transform-box: fill-box;
+}
+
+/* Typografi för ringtexten */
+.ring-text {
+  font-family: inherit;       /* eller valfritt typsnitt */
+  font-size: 10px;            /* finjustera */
+  letter-spacing: 1.5px;      /* ger jämnare flöde */
+  text-transform: uppercase;
+  dominant-baseline: middle;
+}
+
+/* 1) Kontinuerlig rotation åt samma håll */
+.spin-loop .text-ring {
+  animation: spin 18s linear infinite;
+}
+
+/* 2) Pingpong: ett varv fram, ett varv tillbaka med mjuk vändning */
+.spin-pingpong .text-ring {
+  animation: spin 18s ease-in-out infinite alternate;
+}
+
+/* Nyckelbildrutor för 360-graders varv */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* Tillgänglighet: respektera reducerad rörelse */
+@media (prefers-reduced-motion: reduce) {
+  .spin-loop .text-ring,
+  .spin-pingpong .text-ring {
+    animation: none;
+  }
+}
+
+
 .popup-footer {
     display: flex;
     flex-direction: column;
