@@ -918,26 +918,38 @@
 <footer class="footer custom-section section-to-animate">
   <div class="footer-logo-container">
     <!-- SVG: endast texten snurrar -->
-    <svg
-      class="footer-logo-svg spin-loop"
-      viewBox="0 0 200 200"
-      aria-label="Atmos Design Studio Stockholm Sweden"
-      xmlns="http://www.w3.org/2000/svg"
-      xmlns:xlink="http://www.w3.org/1999/xlink"
-    >
-      <defs>
-        <path id="circlePath" d="M100,100 m-60,0 a60,60 0 1,1 120,0 a60,60 0 1,1 -120,0"/>
-      </defs>
+    <!-- SVG: endast texten snurrar runt cirkeln -->
+      <svg
+        class="footer-logo-svg spin-loop"
+        viewBox="0 0 200 200"
+        aria-label="Atmos Design Studio Stockholm Sweden"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+      >
+        <defs>
+          <!-- Cirkelbana med pathLength för att texten ska fördelas jämnt -->
+          <path
+            id="circlePath"
+            d="M100,100 m-60,0 a60,60 0 1,1 120,0 a60,60 0 1,1 -120,0"
+            pathLength="377"
+          />
+        </defs>
+      
+        <!-- Endast texten roterar -->
+        <g class="text-ring">
+          <text class="ring-text">
+            <textPath
+              xlink:href="#circlePath"
+              startOffset="0%"
+              lengthAdjust="spacingAndGlyphs"
+              textLength="377"
+            >
+              Atmos Design Studio • Stockholm • Sweden
+            </textPath>
+          </text>
+        </g>
+      </svg>
 
-      <!-- Endast denna grupp roteras -->
-      <g class="text-ring">
-        <text class="ring-text">
-          <textPath xlink:href="#circlePath" startOffset="0%">
-            Atmos Design Studio * Stockholm * Sweden * Atmos Design Studio * Stockholm * Sweden *
-          </textPath>
-        </text>
-      </g>
-    </svg>
 
     <!-- Din statiska logga i mitten -->
     <div class="footer-logo-circle">
@@ -3277,6 +3289,7 @@
 </body>
 
 </html>
+
 
 
 
