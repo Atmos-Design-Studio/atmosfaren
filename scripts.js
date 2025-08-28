@@ -1,6 +1,29 @@
 console.log("JavaScript-fil laddad korrekt");
 
 // =====================
+// Footer Rotating Text
+// =====================
+document.addEventListener('DOMContentLoaded', function () {
+  const svg = document.querySelector('.footer-logo-svg');
+  if (!svg) return;
+  const ring = svg.querySelector('.text-ring');
+  if (!ring) return;
+
+  const speed = parseFloat(svg.dataset.speed || '18');
+  const mode  = (svg.dataset.mode || '').toLowerCase(); // "loop" eller "pingpong"
+
+  ring.style.animationDuration = speed + 's';
+
+  if (mode === 'loop') {
+    svg.classList.remove('spin-pingpong');
+    svg.classList.add('spin-loop');
+  } else if (mode === 'pingpong') {
+    svg.classList.remove('spin-loop');
+    svg.classList.add('spin-pingpong');
+  }
+});
+
+// =====================
 // Hantera navbar scroll
 // =====================
 function handleNavbarScroll() {
@@ -988,6 +1011,7 @@ document.addEventListener("DOMContentLoaded", () => {
         console.error('Error during initialization:', error);
     }
 });
+
 
 
 
