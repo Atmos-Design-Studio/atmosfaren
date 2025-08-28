@@ -3206,7 +3206,6 @@ a {
 
 
 /* =================== Footer: Bas =================== */
-
 .footer {
   background-color: #12111F;
   color: #fff;
@@ -3243,7 +3242,6 @@ a {
   width: 50px;
   height: 50px;
   position: absolute;
-  /* visuell skärpa under SVG-rörelse */
   image-rendering: auto;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
@@ -3251,42 +3249,38 @@ a {
 
 /* =================== Footer: Cirkulär text =================== */
 
-/* SVG placeras över mittenloggan och är responsiv */
+/* SVG responsiv och över mittenloggan */
 .footer-logo-svg {
-  width: clamp(160px, 22vw, 260px);
-  height: clamp(160px, 22vw, 260px);
+  /* något större min för mobil så tecken blir läsbara */
+  width: clamp(180px, 22vw, 300px);
+  height: clamp(180px, 22vw, 300px);
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   display: block;
   overflow: visible;                 /* fixar klipp i Safari iOS */
-  pointer-events: none;              /* inget klickfång */
+  pointer-events: none;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
 }
 
-/* Själva ringtexten. Låt textLength styra avståndet mellan tecken */
+/* ringtext  låt JS säkerställa längd runt cirkeln */
 .footer-logo-svg .ring-text {
   font: inherit;
-  font-size: clamp(9px, 1.2vw, 12px);
+  /* responsiv storlek  liten mobil till desktop */
+  font-size: clamp(10px, 1.4vw, 14px);
   letter-spacing: 0;
   text-transform: inherit;
   fill: #fff;
 
-  /* Jämn rendering i Edge och Safari under rotation */
   text-rendering: geometricPrecision;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-kerning: normal;
 }
 
-/* Inga CSS-keyframes för rotation.
-   Rörelsen sker med <animateTransform> i SVG:n
-   vilket är stabilt i Safari Edge Firefox och Chrome */
-
 /* =================== Footer: Innehåll =================== */
-
 .footer-content {
   display: flex;
   flex-direction: column;
@@ -3327,7 +3321,6 @@ a {
 }
 
 /* =================== Popup footer och social =================== */
-
 .popup-footer {
   display: flex;
   flex-direction: column;
@@ -3360,7 +3353,6 @@ a {
   gap: 15px;
   padding: 0;
 }
-
 .social-media-icons li { display: inline-block; }
 
 .social-media-icons a {
@@ -3373,13 +3365,11 @@ a {
   background-color: rgba(255, 255, 255, 0.1);
   transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
 }
-
 .social-media-icons a img {
   width: 100%;
   height: 100%;
   border-radius: 50%;
 }
-
 .social-media-icons a:hover {
   background-color: rgba(145, 71, 255, 0.8);
   transform: scale(1.1);
@@ -3390,6 +3380,7 @@ a {
 .popup-footer a {
   margin: 5px 0;
 }
+
 
 /* =================== Global Button Styling =================== */
 
@@ -4151,6 +4142,7 @@ a {
         right: -120px; /* Justera placeringen av högra linjen */
     }
 }
+
 
 
 
