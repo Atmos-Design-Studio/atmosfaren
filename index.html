@@ -977,78 +977,6 @@
   </div>
 </footer>
 
-
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const svg  = document.querySelector('.footer-logo-svg');
-  if (!svg) return;
-
-  const path = svg.querySelector('#circlePath');
-  const tp   = svg.querySelector('textPath');
-  const smil = svg.querySelector('animateTransform');
-  if (!path || !tp) return;
-
-  // Pausa eller ta bort SMIL så vi bara har en källa till rörelse
-  try { svg.pauseAnimations(); } catch(e) {}
-  if (smil && smil.parentNode) smil.parentNode.removeChild(smil);
-
-  // Motorer
-  const ua = navigator.userAgent;
-  const isFirefox = /Firefox\//.test(ua);
-  const isSafari  = /Safari/.test(ua) && !/Chrome|Chromium|Edg\//.test(ua);
-
-  // Synka banlängd
-  const L = path.getTotalLength();
-  path.setAttribute('pathLength', L.toFixed(2));
-
-  // Nollställ först
-  tp.removeAttribute('textLength');
-  tp.removeAttribute('lengthAdjust');
-
-  // Firefox fyll cirkeln utan glapp
-  if (isFirefox) {
-    tp.setAttribute('lengthAdjust', 'spacing');   // justera mellanrum
-    tp.setAttribute('textLength', String(L));     // exakt längd
-  }
-
-  // Safari iOS undvik tecken som försvinner
-  if (isSafari) {
-    tp.removeAttribute('textLength');
-    tp.removeAttribute('lengthAdjust');
-  }
-
-  // Respektera reducerad rörelse
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-  // StartOffset animation  samma i alla motorer
-  const speed = parseFloat(svg.dataset.speed || '22');      // sek per varv
-  const mode  = (svg.dataset.mode || 'loop').toLowerCase(); // loop eller pingpong
-  let dir = 1;
-  let off = 0;                   // 0..100 %
-  let last = performance.now();
-
-  function frame(now){
-    const dt = (now - last) / 1000;
-    last = now;
-
-    off += (100 * dt / speed) * dir;
-
-    if (mode === 'loop') {
-      if (off >= 100) off -= 100;
-      if (off < 0)    off += 100;
-    } else {
-      if (off >= 100) { off = 100; dir = -1; }
-      if (off <= 0)   { off = 0;   dir =  1; }
-    }
-
-    tp.setAttribute('startOffset', off + '%');
-    requestAnimationFrame(frame);
-  }
-  requestAnimationFrame(frame);
-});
-</script>
-
-
 <!-- Popup for About (Atmos) -->
 <div id="about-popup" class="project-popup">
     <div class="popup-content">
@@ -3364,6 +3292,7 @@ document.addEventListener('DOMContentLoaded', () => {
 </body>
 
 </html>
+
 
 
 
