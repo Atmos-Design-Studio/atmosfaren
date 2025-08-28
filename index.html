@@ -917,53 +917,27 @@
 <!-- Footer Section -->
 <footer class="footer custom-section section-to-animate">
   <div class="footer-logo-container">
-    <!-- SVG: behåller din struktur -->
+    <!-- SVG: endast texten roterar. Loggan står still -->
     <svg
       class="footer-logo-svg"
-      data-speed="22"              <!-- fart i sek per varv -->
-      data-mode="loop"            <!-- loop eller pingpong -->
       viewBox="0 0 200 200"
       aria-label="Atmos Design Studio Stockholm Sweden"
       xmlns="http://www.w3.org/2000/svg"
       xmlns:xlink="http://www.w3.org/1999/xlink"
     >
       <defs>
-        <!-- radius 60  omkrets sätts även i JS -->
-        <path
-          id="circlePath"
-          d="M100,100 m-60,0 a60,60 0 1,1 120,0 a60,60 0 1,1 -120,0"
-          pathLength="377"
-        />
+        <path id="circlePath" d="M100,100 m-60,0 a60,60 0 1,1 120,0 a60,60 0 1,1 -120,0"/>
       </defs>
 
-      <!-- gruppen roterades tidigare med SMIL, vi behåller den men pausar via JS -->
-      <g class="text-ring" transform="rotate(0 100 100)">
+      <g class="text-ring">
         <text class="ring-text">
-          <textPath
-            href="#circlePath"
-            xlink:href="#circlePath"
-            startOffset="0%"
-            lengthAdjust="spacing"
-            textLength="377"
-          >
-            • Atmos Design Studio • Stockholm • Sweden •
+          <textPath xlink:href="#circlePath" startOffset="0%">
+            Atmos Design Studio * Stockholm * Sweden * Atmos Design Studio * Stockholm * Sweden *
           </textPath>
         </text>
-
-        <!-- lämnas kvar men pausas i JS för enhetligt beteende -->
-        <animateTransform
-          id="ring-anim"
-          attributeName="transform"
-          type="rotate"
-          from="0 100 100"
-          to="360 100 100"
-          dur="24s"
-          repeatCount="indefinite"
-        />
       </g>
     </svg>
 
-    <!-- Statisk logga i mitten -->
     <div class="footer-logo-circle">
       <img src="bilder/atmos3.webp" alt="Atmos Design Studio Logo" class="footer-logo-img">
     </div>
@@ -986,6 +960,7 @@
     </p>
   </div>
 </footer>
+
 
 <!-- Popup for About (Atmos) -->
 <div id="about-popup" class="project-popup">
@@ -3302,4 +3277,5 @@
 </body>
 
 </html>
+
 
