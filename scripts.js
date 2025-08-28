@@ -7,87 +7,31 @@ document.addEventListener('DOMContentLoaded', () => {
   const svg  = document.querySelector('.footer-logo-svg');
   if (!svg) return;
 
-  const path = svg.querySelector('#circlePath');
-  const tp   = svg.querySelector('textPath');
-  const anim = svg.querySelector('animateTransform');
-  if (!path || !tp || !anim) return;
+  const ring = svg.querySelector('.text-ring');
+  if (!ring) return;
 
-  // motor-detektion
-  const ua = navigator.userAgent;
-  const isFirefox = /Firefox\//.test(ua);
-  const isSafari  = /Safari/.test(ua) && !/Chrome|Chromium|Edg\//.test(ua);
-  const isChromium = /Chrome|Chromium|Edg\//.test(ua);
-
-  // faktisk längd på banan
-  const L = path.getTotalLength();
-  path.setAttribute('pathLength', L.toFixed(2));
-
-  // nollställ först
-  tp.removeAttribute('textLength');
-  tp.removeAttribute('lengthAdjust');
-
-  // Firefox. fyll exakt runt utan glapp
-  if (isFirefox) {
-    // liten justering för att undvika wrap. tweak vid behov
-    const fudge = 0.9985;
-    tp.setAttribute('lengthAdjust', 'spacingAndGlyphs');
-    tp.setAttribute('textLength', (L * fudge).toFixed(2));
-  }
-
-  // Chromium. jämn storlek på tecken under rörelse
-  if (isChromium) {
-    tp.setAttribute('lengthAdjust', 'spacing');
-    tp.setAttribute('textLength', L.toFixed(2));
-  }
-
-  // Safari iOS. undvik buggen där tecken försvinner
-  if (isSafari) {
-    // inga textLength-attribut alls
-    tp.removeAttribute('textLength');
-    tp.removeAttribute('lengthAdjust');
-    // säkra repaints
-    svg.style.willChange = 'transform';
-  }
-
-  // fart. kan styras med data-speed på svg. annars 24 s
-  const speed = parseFloat(svg.dataset.speed || '24');
-  anim.setAttribute('dur', speed + 's');
-
-  // respektera reduced motion
+  // respekt för reduced motion
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    try { svg.pauseAnimations(); } catch(e) {}
+    svg.classList.remove('spin-loop', 'spin-pingpong');
+    ring.style.animation = 'none';
+    return;
   }
-});
 
-  // respekt för användarinställning
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  // Hastighet via data-speed om du vill. Annars 18s
+  const speedAttr = svg.getAttribute('data-speed');
+  const speed = speedAttr ? parseFloat(speedAttr) : 18;
+  ring.style.animationDuration = speed + 's';
 
-  // Animation av startOffset  stabil i alla motorer
-  const speed = parseFloat(svg.dataset.speed || '22');   // sek per varv
-  const mode  = (svg.dataset.mode || 'loop').toLowerCase();
-  let dir = 1;        // riktning
-  let off = 0;        // 0..100 %
-  let last = performance.now();
+  // Välj läge via data-mode eller befintliga klasser. Default loop.
+  const dataMode =
+    (svg.getAttribute('data-mode') || '').toLowerCase();
+  let mode = dataMode === 'pingpong' ? 'pingpong' : 'loop';
 
-  function frame(now){
-    const dt = (now - last) / 1000;
-    last = now;
+  if (svg.classList.contains('spin-pingpong')) mode = 'pingpong';
+  if (svg.classList.contains('spin-loop'))     mode = 'loop';
 
-    const delta = 100 * dt / speed * dir; // % per sekund
-    off += delta;
-
-    if (mode === 'loop') {
-      if (off >= 100) off -= 100;
-      if (off < 0)    off += 100;
-    } else {
-      if (off >= 100) { off = 100; dir = -1; }
-      if (off <= 0)   { off = 0;   dir =  1; }
-    }
-
-    tp.setAttribute('startOffset', off + '%');
-    requestAnimationFrame(frame);
-  }
-  requestAnimationFrame(frame);
+  svg.classList.remove('spin-loop', 'spin-pingpong');
+  svg.classList.add(mode === 'pingpong' ? 'spin-pingpong' : 'spin-loop');
 });
 
 // =====================
@@ -1078,6 +1022,7 @@ document.addEventListener("DOMContentLoaded", () => {
         console.error('Error during initialization:', error);
     }
 });
+
 
 
 
