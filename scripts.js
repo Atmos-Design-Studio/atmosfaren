@@ -4,59 +4,97 @@ console.log("JavaScript-fil laddad korrekt");
 // Footer Rotating Text (cross-browser)
 // =====================
 document.addEventListener('DOMContentLoaded', () => {
-  const svg = document.querySelector('.footer-logo-svg');
-  if (!svg) return;
-
-  const path = svg.querySelector('#circlePath');
-  const tp   = svg.querySelector('textPath');
-  const ring = svg.querySelector('.text-ring');
-  if (!path || !tp || !ring) return;
-
-  // Säkerställ båda attributen för maximal kompatibilitet
-  tp.setAttribute('href', '#circlePath');
-  tp.setAttribute('xlink:href', '#circlePath');
-
-  // Mät faktisk längd och normalisera
-  const L = path.getTotalLength();
-  path.setAttribute('pathLength', L.toFixed(2));
-
-  // Rensa först
-  tp.removeAttribute('textLength');
-  tp.removeAttribute('lengthAdjust');
-
-  // Motor-detektion
-  const ua = navigator.userAgent;
-  const isFirefox = /Firefox\//.test(ua);
-  const isSafari  = /^((?!chrome|android).)*safari/i.test(ua);
-
-  // Gör att texten fyller banan
-  if (isFirefox) {
-    // Firefox gillar spacingAndGlyphs bäst (liten "fudge" undviker wrap)
-    tp.setAttribute('lengthAdjust', 'spacingAndGlyphs');
-    tp.setAttribute('textLength', (L * 0.997).toFixed(2));
-  } else if (!isSafari) {
-    // Chromium/Edge: spacing räcker, precis = pathLength
-    tp.setAttribute('lengthAdjust', 'spacing');
-    tp.setAttribute('textLength', L.toFixed(2));
-  }
-  // Safari iOS/macOS: lämna utan textLength (kända rendering-buggar).
-  // Vi har förlängt texten i HTML så cirkeln täcks ändå.
-
-  // Reduced motion respekt
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    svg.classList.remove('spin-loop', 'spin-pingpong');
-    ring.style.animation = 'none';
-    return;
-  }
-
-  // Hastighet & läge
-  const speed = parseFloat(svg.dataset.speed || '22'); // sek/varv
-  const mode  = (svg.dataset.mode || 'loop').toLowerCase();
-  svg.style.setProperty('--ring-speed', speed + 's');
-  svg.classList.remove('spin-loop', 'spin-pingpong');
-  svg.classList.add(mode === 'pingpong' ? 'spin-pingpong' : 'spin-loop');
+  initFooterRing();
 });
 
+// Robust ringtext som fyller cirkeln och snurrar
+function initFooterRing() {
+  const PHRASE = 'Atmosfären • Design Studio • Stockholm • Sweden • ';
+
+  const isFirefox = () => /Firefox\//.test(navigator.userAgent);
+  const isSafari  = () => /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+
+  document.querySelectorAll('.footer-logo-svg').forEach(svg => {
+    const path = svg.querySelector('#circlePath');
+    const textEl = svg.querySelector('.ring-text');
+    const textPath = svg.querySelector('#ringTextPath');
+    const spin = svg.querySelector('#ringSpin');
+    if (!path || !textEl || !textPath) return;
+
+    const prefersReduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduce && spin) {
+      spin.setAttribute('dur', '0s');
+      spin.setAttribute('repeatCount', '0');
+    }
+
+    const fillOnce = () => {
+      const L = path.getTotalLength();
+
+      textPath.setAttribute('href', '#circlePath');
+      textPath.setAttribute('xlink:href', '#circlePath');
+
+      let content = PHRASE;
+      textPath.textContent = content;
+
+      const measure = () => {
+        const len = typeof textEl.getComputedTextLength === 'function'
+          ? textEl.getComputedTextLength()
+          : 0;
+        return Math.max(0, len);
+      };
+
+      let guard = 40;
+      while (measure() < L * 1.02 && guard-- > 0) {
+        content += PHRASE;
+        textPath.textContent = content;
+      }
+
+      textPath.removeAttribute('textLength');
+      textPath.removeAttribute('lengthAdjust');
+
+      if (isSafari()) {
+        // lämna naturlig spacing
+      } else if (isFirefox()) {
+        textPath.setAttribute('lengthAdjust', 'spacingAndGlyphs');
+        textPath.setAttribute('textLength', String(L));
+      } else {
+        textPath.setAttribute('lengthAdjust', 'spacing');
+        textPath.setAttribute('textLength', String(L));
+      }
+    };
+
+    const ready = document.fonts && typeof document.fonts.ready?.then === 'function'
+      ? document.fonts.ready.catch(() => {})
+      : Promise.resolve();
+
+    Promise.resolve(ready).then(fillOnce);
+
+    let lastDPR = window.devicePixelRatio || 1;
+    const ro = new ResizeObserver(fillOnce);
+    ro.observe(svg);
+
+    window.addEventListener('resize', () => {
+      const dpr = window.devicePixelRatio || 1;
+      if (Math.abs(dpr - lastDPR) > 0.01) {
+        lastDPR = dpr;
+        fillOnce();
+      } else {
+        fillOnce();
+      }
+    });
+
+    window.addEventListener('orientationchange', fillOnce);
+
+    svg._recalcRing = fillOnce;
+  });
+}
+
+// Om du monterar footern på nytt i en SPA kan du kalla denna
+window.recalcFooterRing = function () {
+  document.querySelectorAll('.footer-logo-svg').forEach(svg => {
+    if (svg._recalcRing) svg._recalcRing();
+  });
+};
 // =====================
 // Hantera navbar scroll
 // =====================
@@ -1045,6 +1083,7 @@ document.addEventListener("DOMContentLoaded", () => {
         console.error('Error during initialization:', error);
     }
 });
+
 
 
 
