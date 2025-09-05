@@ -844,60 +844,94 @@ class DataTranslate {
 // Hantera översättning och popup-text
 // =====================
 document.addEventListener('DOMContentLoaded', async function () {
-    try {
-        // Skapa en instans av DataTranslate och ladda översättningarna
-        const translator = new DataTranslate();
-        await translator.loadTranslations();
-        translator.translate(); // Översätt sidan
+  try {
+    // Skapa översättare och ladda texter
+    const translator = new DataTranslate();
+    await translator.loadTranslations();
+    translator.translate();
 
-        const lang = translator.language.split('-')[0];
-        const text = translator.translations[lang]?.welcomeMessage || '';
+    // Språk med fallback till engelska
+    const lang = (translator.language || 'en').split('-')[0];
+    const text =
+      translator.translations?.[lang]?.welcomeMessage ??
+      translator.translations?.en?.welcomeMessage ??
+      '';
 
-        if (!text) {
-            console.error('Ingen text hittades för översättningen.');
-            return;
-        }
-
-        const bubbleText = document.getElementById('bubble-text');
-        const popup = document.getElementById('popup');
-
-        if (!bubbleText || !popup) {
-            console.error('Element saknas: bubble-text eller popup.');
-            return;
-        }
-
-        let index = 0;
-
-        // Funktion för att animera texten bokstav för bokstav
-        function animateText() {
-            if (index < text.length) {
-                bubbleText.innerHTML += text.charAt(index);
-                index++;
-                setTimeout(animateText, 50);
-            }
-        }
-
-        // Visa popupen efter 20 sekunder
-        setTimeout(() => {
-            console.log('Visar popupen...');
-            bubbleText.textContent = ''; // Rensa bubble-text innan animationen
-            popup.style.display = 'flex'; // Ändra display till flex
-            popup.style.opacity = '1'; // Sätt opacity till 1 för att säkerställa att den är synlig
-            animateText(); // Starta textanimationen
-        }, 20000); // Justerade tiden till 20 sekunder
-
-        // Eventlistener för stängningsknappen
-        document.getElementById('close-popup').addEventListener('click', () => {
-            popup.style.display = 'none';
-        });
-
-        // Eventlistener för feedback-länken
-        document.querySelector('.feedback-link').addEventListener('click', () => {
-            popup.style.display = 'none';
-        });
-    } catch (error) {
-        console.error('Fel vid laddning av översättningar eller popup:', error);
+    if (!text) {
+      console.error('Ingen text hittades för översättningen.');
+      return;
     }
+
+    const bubbleText = document.getElementById('bubble-text');
+    const popup = document.getElementById('popup');
+
+    if (!bubbleText || !popup) {
+      console.error('Element saknas: bubble-text eller popup.');
+      return;
+    }
+
+    let index = 0;
+    let typingTimer;
+
+    // Skriv bokstav för bokstav
+    function animateText() {
+      if (index < text.length) {
+        bubbleText.textContent += text.charAt(index);
+        index++;
+        typingTimer = setTimeout(animateText, 50);
+      }
+    }
+
+    // Hjälpare för att starta visning och animation på ett robust sätt
+    function showPopup() {
+      // Rensa tidigare text och timers
+      clearTimeout(typingTimer);
+      index = 0;
+      bubbleText.textContent = '';
+
+      // Nollställ eventuell tidigare CSS animation
+      popup.classList.remove('is-visible');
+      popup.style.animation = 'none';
+      // Tvinga reflow så att nästa animation säkert startar
+      void popup.offsetWidth;
+      popup.style.animation = '';
+
+      // Visa och animera
+      popup.classList.add('is-visible');
+
+      // Respektera användare som valt reduced motion
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (prefersReduced) {
+        bubbleText.textContent = text;
+      } else {
+        animateText();
+      }
+    }
+
+    // Visa efter 20 sekunder
+    const delayMs = 20000;
+    const revealTimer = setTimeout(showPopup, delayMs);
+
+    // Stäng-knapp om den finns
+    const closeBtn = document.getElementById('close-popup');
+    if (closeBtn) {
+      closeBtn.addEventListener('click', () => {
+        clearTimeout(revealTimer);
+        clearTimeout(typingTimer);
+        popup.classList.remove('is-visible');
+      });
+    }
+
+    // Länk stänger popup om den finns
+    const feedbackLink = document.querySelector('.feedback-link');
+    if (feedbackLink) {
+      feedbackLink.addEventListener('click', () => {
+        popup.classList.remove('is-visible');
+      });
+    }
+  } catch (error) {
+    console.error('Fel vid laddning av översättningar eller popup:', error);
+  }
 });
 
 // =====================
@@ -1054,6 +1088,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Reduced motion respekt för allt annat innehåll
   // SMIL snurren ligger kvar enligt din originaldesign
 });
+
 
 
 
