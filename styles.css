@@ -343,7 +343,6 @@ img[loading="lazy"] {
     box-shadow: 0 0 15px rgba(255, 255, 255, 0.3), 0 0 15px rgba(0, 0, 0, 0.6); /* Svag vit skugga och en mörkare skugga */
     z-index: 1000;
     transform: scale(0);
-    animation: popup-animation 0.5s forwards;
     overflow: auto;
     text-align: center;
     display: none;
@@ -393,6 +392,12 @@ img[loading="lazy"] {
 /* Hover-effekt för stäng-knappen */
 #close-popup:hover {
     background-color: #444; /* Mörkare bakgrund vid hover */
+}
+
+/* klass som aktiveras av JS */
+.chat-bubble.is-visible {
+  display: flex;
+  animation: popup-animation 0.5s forwards;
 }
 
 /* Popup Animation */
@@ -4144,6 +4149,7 @@ a {
         right: -120px; /* Justera placeringen av högra linjen */
     }
 }
+
 
 
 
