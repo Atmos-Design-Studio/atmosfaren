@@ -761,7 +761,7 @@ function changeLanguage(lang) {
 // =====================
 function detectUserLanguage() {
   const userLang = navigator.language || navigator.userLanguage;
-  const availableLanguages = ['en', 'sv', 'de', 'es', 'fi', 'fr', 'it', 'ja', 'pl'];
+  const availableLanguages = ['en', 'sv', 'de', 'es', 'fi', 'fr', 'it', 'ja', 'pl','ru'];
   const langPrefix = userLang.split('-')[0];
 
   // Om språket inte stöds, använd engelska som standard
@@ -1089,6 +1089,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Reduced motion respekt för allt annat innehåll
   // SMIL snurren ligger kvar enligt din originaldesign
 });
+
 
 
 
