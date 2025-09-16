@@ -702,25 +702,28 @@ function setupScrollContainer() {
     });
 }
 
+// Placera detta högst upp i din i18n-del
+const I18N_URL = new URL('dennis-translations.json', document.baseURI).href;
+
 // =====================
 // Ladda och ändra språk
 // =====================
 async function loadTranslations(lang) {
-    try {
-        const response = await fetch('dennis-translations.json');
-        if (!response.ok) throw new Error('Network response was not ok');
-        const translations = await response.json();
+  try {
+    const response = await fetch(I18N_URL, { cache: 'no-store' });
+    if (!response.ok) throw new Error(`HTTP ${response.status} for ${I18N_URL}`);
+    const translations = await response.json();
 
-        document.querySelectorAll('[data-translate]').forEach(el => {
-            const key = el.getAttribute('data-translate');
-            if (translations[lang] && translations[lang][key]) {
-                el.textContent = translations[lang][key];
-            }
-        });
-    } catch (error) {
-        console.error('Error loading translations:', error);
-    }
+    document.querySelectorAll('[data-translate]').forEach(el => {
+      const key = el.getAttribute('data-translate');
+      const val = translations?.[lang]?.[key];
+      if (typeof val === 'string') el.textContent = val;
+    });
+  } catch (error) {
+    console.error('Error loading translations:', error);
+  }
 }
+
 
 function changeLanguage(lang) {
     const translations = {
@@ -1088,6 +1091,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Reduced motion respekt för allt annat innehåll
   // SMIL snurren ligger kvar enligt din originaldesign
 });
+
 
 
 
