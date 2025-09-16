@@ -706,7 +706,7 @@ function setupScrollContainer() {
 const I18N_URL = new URL('dennis-translations.json', document.baseURI).href;
 
 // =====================
-// Ladda och ändra språk
+// Ladda och applicera språk för hela sidan
 // =====================
 async function loadTranslations(lang) {
   try {
@@ -716,11 +716,11 @@ async function loadTranslations(lang) {
 
     document.querySelectorAll('[data-translate]').forEach(el => {
       const key = el.getAttribute('data-translate');
-      const val = translations?.[lang]?.[key];
+      const val = translations?.[lang]?.[key] ?? translations?.en?.[key];
       if (typeof val === 'string') el.textContent = val;
     });
   } catch (error) {
-    console.error('Error loading translations:', error);
+    console.error('Kunde inte ladda översättningar:', error);
   }
 }
 
@@ -851,7 +851,6 @@ document.addEventListener('DOMContentLoaded', async function () {
     // Skapa översättare och ladda texter
     const translator = new DataTranslate();
     await translator.loadTranslations();
-    translator.translate();
 
     // Språk med fallback till engelska
     const lang = (translator.language || 'en').split('-')[0];
@@ -1091,6 +1090,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Reduced motion respekt för allt annat innehåll
   // SMIL snurren ligger kvar enligt din originaldesign
 });
+
 
 
 
