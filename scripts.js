@@ -702,28 +702,11 @@ function setupScrollContainer() {
     });
 }
 
-// =====================
-// Ladda och ändra språk
-// =====================
-async function loadTranslations(lang) {
-  try {
-    const response = await fetch('dennis-translations.json');
-    if (!response.ok) throw new Error('Network response was not ok');
-    const translations = await response.json();
+/* ===== i18n: robust language system for GitHub Pages ===== */
+(() => {
+  const TRANSLATIONS_URL = new URL('dennis-translations.json', document.baseURI).href;
 
-    document.querySelectorAll('[data-translate]').forEach(el => {
-      const key = el.getAttribute('data-translate');
-      if (translations[lang] && translations[lang][key]) {
-        el.textContent = translations[lang][key];
-      }
-    });
-  } catch (error) {
-    console.error('Error loading translations:', error);
-  }
-}
-
-function changeLanguage(lang) {
-  const translations = {
+  const LANGUAGE_META = {
     en: { icon: 'bilder/emoji9.webp',  name: 'English'  },
     sv: { icon: 'bilder/emoji2.webp',  name: 'Svenska'  },
     de: { icon: 'bilder/emoji10.webp', name: 'Deutsch'  },
@@ -733,205 +716,114 @@ function changeLanguage(lang) {
     it: { icon: 'bilder/emoji14.webp', name: 'Italiano' },
     ja: { icon: 'bilder/emoji15.webp', name: '日本語'      },
     pl: { icon: 'bilder/emoji16.webp', name: 'Polski'   },
-    ru: { icon: 'bilder/emoji17.webp', name: 'Rosyjski' }
+    ru: { icon: 'bilder/emoji17.webp', name: 'Русский'  }
   };
 
-  const currentIcon = document.getElementById('current-language-icon');
-  if (!currentIcon) {
-    console.error('Current language icon element not found!');
-    return;
+  const SUPPORTED = Object.keys(LANGUAGE_META);
+  const STORAGE_KEY = 'atmos.lang';
+
+  let cache = null;
+  let currentLang = null;
+
+  function normalizeLang(code) {
+    if (!code) return 'en';
+    const short = String(code).toLowerCase().split('-')[0];
+    return SUPPORTED.includes(short) ? short : 'en';
   }
 
-  // Kontrollera om språket finns i translations-objektet
-  if (translations[lang]) {
-    currentIcon.src = translations[lang].icon;
-    currentIcon.title = translations[lang].name;
-    console.log(`Language changed to: ${translations[lang].name}`);
-  } else {
-    console.error(`Language '${lang}' not found in translations.`);
+  function getInitialLang() {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) return normalizeLang(saved);
+    return normalizeLang(navigator.language || navigator.userLanguage || 'en');
   }
 
-  // Ladda översättningar
-  loadTranslations(lang);
-  document.getElementById('language-dropdown').style.display = 'none';
-}
-
-// =====================
-// Automatisk språkdetektering
-// =====================
-function detectUserLanguage() {
-  const userLang = navigator.language || navigator.userLanguage;
-  const availableLanguages = ['en', 'sv', 'de', 'es', 'fi', 'fr', 'it', 'ja', 'pl','ru'];
-  const langPrefix = userLang.split('-')[0];
-
-  // Om språket inte stöds, använd engelska som standard
-  return availableLanguages.includes(langPrefix) ? langPrefix : 'en';
-}
-
-// =====================
-// Språk-dropdown
-// =====================
-function toggleDropdown(event) {
-  event.stopPropagation();
-  const dropdown = document.getElementById('language-dropdown');
-  if (!dropdown) {
-    console.error('Language dropdown element not found!');
-    return;
+  async function fetchTranslations() {
+    if (cache) return cache;
+    // Force same-origin fetch with correct base URL on GH Pages + custom domain
+    const res = await fetch(TRANSLATIONS_URL, { cache: 'no-store' });
+    if (!res.ok) throw new Error(`Failed to load translations: ${res.status}`);
+    cache = await res.json();
+    return cache;
   }
-  dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
-}
 
-function setupLanguageDropdown() {
-  document.addEventListener('click', event => {
-    const dropdown = document.getElementById('language-dropdown');
-    const selector = document.querySelector('.language-selector');
-
-    if (!selector.contains(event.target) && !dropdown.contains(event.target)) {
-      dropdown.style.display = 'none';
+  function applyIcon(lang) {
+    const meta = LANGUAGE_META[lang] || LANGUAGE_META.en;
+    const el = document.getElementById('current-language-icon');
+    if (el) {
+      el.src = meta.icon;
+      el.title = meta.name;
+      el.setAttribute('alt', meta.name);
     }
-  });
+  }
 
-  const dropdown = document.getElementById('language-dropdown');
-  if (dropdown) {
-    dropdown.addEventListener('click', event => {
-      event.stopPropagation();
+  function applyTexts(lang, dict) {
+    // text content
+    document.querySelectorAll('[data-translate]').forEach(el => {
+      const key = el.getAttribute('data-translate');
+      const val = dict?.[lang]?.[key] ?? dict?.en?.[key];
+      if (val != null) el.textContent = val;
     });
-  } else {
-    console.error('Language dropdown element not found during setup!');
-  }
-}
 
-// =====================
-// Initiera funktion popup bubble
-// =====================
-class DataTranslate {
-  constructor() {
-    this.language = navigator.language || 'sv'; // Hämta användarens språkkod, standard 'sv'
-    this.translations = {}; // För att lagra översättningar
+    // attribute translations (optional if you add these keys in JSON):
+    //  data-i18n-attr="title" data-translate="hero_subtitle_title"
+    document.querySelectorAll('[data-i18n-attr][data-translate]').forEach(el => {
+      const attr = el.getAttribute('data-i18n-attr');
+      const key  = el.getAttribute('data-translate');
+      const val  = dict?.[lang]?.[key] ?? dict?.en?.[key];
+      if (val != null) el.setAttribute(attr, val);
+    });
   }
 
-  async loadTranslations() {
+  async function setLanguage(lang) {
+    currentLang = normalizeLang(lang);
+    localStorage.setItem(STORAGE_KEY, currentLang);
+    applyIcon(currentLang);
+
     try {
-      // Laddar översättningsfilen (JSON)
-      const response = await fetch('dennis-translations.json'); // Ändra denna sökväg till din JSON-fil
-      this.translations = await response.json();
-    } catch (error) {
-      console.error('Kunde inte ladda översättningar:', error);
+      const dict = await fetchTranslations();
+      applyTexts(currentLang, dict);
+    } catch (e) {
+      console.error(e);
     }
   }
 
-  translate() {
-    // Få språkkod, t.ex., 'sv' eller 'en'
-    const lang = this.language.split('-')[0];
+  function bindDropdown() {
+    const toggle = document.getElementById('language-toggle');
+    const dropdown = document.getElementById('language-dropdown');
 
-    // Hitta alla element med 'data-translate' attributet
-    const elements = document.querySelectorAll('[data-translate]');
+    if (!toggle || !dropdown) return;
 
-    elements.forEach(element => {
-      const key = element.getAttribute('data-translate');
-      const translation = this.translations[lang] ? this.translations[lang][key] : null;
+    toggle.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const open = dropdown.style.display === 'block';
+      dropdown.style.display = open ? 'none' : 'block';
+      toggle.setAttribute('aria-expanded', String(!open));
+    });
 
-      // Uppdatera endast de element som inte är 'bubble-text'
-      if (translation && element.id !== 'bubble-text') {
-        element.textContent = translation;
-      }
+    dropdown.querySelectorAll('[data-lang]').forEach(a => {
+      a.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const lang = a.getAttribute('data-lang');
+        setLanguage(lang);
+        dropdown.style.display = 'none';
+        toggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    document.addEventListener('click', () => {
+      dropdown.style.display = 'none';
+      toggle.setAttribute('aria-expanded', 'false');
     });
   }
-}
 
-// =====================
-// Hantera översättning och popup-text
-// =====================
-document.addEventListener('DOMContentLoaded', async function () {
-  try {
-    // Skapa översättare och ladda texter
-    const translator = new DataTranslate();
-    await translator.loadTranslations();
-    translator.translate();
-
-    // Språk med fallback till engelska
-    const lang = (translator.language || 'en').split('-')[0];
-    const text =
-      translator.translations?.[lang]?.welcomeMessage ??
-      translator.translations?.en?.welcomeMessage ??
-      '';
-
-    if (!text) {
-      console.error('Ingen text hittades för översättningen.');
-      return;
-    }
-
-    const bubbleText = document.getElementById('bubble-text');
-    const popup = document.getElementById('popup');
-
-    if (!bubbleText || !popup) {
-      console.error('Element saknas: bubble-text eller popup.');
-      return;
-    }
-
-    let index = 0;
-    let typingTimer;
-
-    // Skriv bokstav för bokstav
-    function animateText() {
-      if (index < text.length) {
-        bubbleText.textContent += text.charAt(index);
-        index++;
-        typingTimer = setTimeout(animateText, 50);
-      }
-    }
-
-    // Hjälpare för att starta visning och animation på ett robust sätt
-    function showPopup() {
-      // Rensa tidigare text och timers
-      clearTimeout(typingTimer);
-      index = 0;
-      bubbleText.textContent = '';
-
-      // Nollställ eventuell tidigare CSS animation
-      popup.classList.remove('is-visible');
-      popup.style.animation = 'none';
-      // Tvinga reflow så att nästa animation säkert startar
-      void popup.offsetWidth;
-      popup.style.animation = '';
-
-      // Visa och animera
-      popup.classList.add('is-visible');
-
-      // Respektera användare som valt reduced motion
-      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (prefersReduced) {
-        bubbleText.textContent = text;
-      } else {
-        animateText();
-      }
-    }
-
-    // Visa efter 20 sekunder
-    const delayMs = 20000;
-    const revealTimer = setTimeout(showPopup, delayMs);
-
-    // Stäng-knapp om den finns
-    const closeBtn = document.getElementById('close-popup');
-    if (closeBtn) {
-      closeBtn.addEventListener('click', () => {
-        clearTimeout(revealTimer);
-        clearTimeout(typingTimer);
-        popup.classList.remove('is-visible');
-      });
-    }
-
-    // Länk stänger popup om den finns
-    const feedbackLink = document.querySelector('.feedback-link');
-    if (feedbackLink) {
-      feedbackLink.addEventListener('click', () => {
-        popup.classList.remove('is-visible');
-      });
-    }
-  } catch (error) {
-    console.error('Fel vid laddning av översättningar eller popup:', error);
-  }
-});
+  // Public init (idempotent)
+  document.addEventListener('DOMContentLoaded', () => {
+    bindDropdown();
+    setLanguage(getInitialLang());
+  });
+})();
 
 
 
@@ -1089,6 +981,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Reduced motion respekt för allt annat innehåll
   // SMIL snurren ligger kvar enligt din originaldesign
 });
+
 
 
 
