@@ -463,7 +463,7 @@
       "testimonial_svid_author_role": "Leiter für Wirtschaft und Industrie @SVID",
       "recommendation_svid": "Empfehlungsschreiben S.V.I.D. 2024 (ENG PDF)",
         "gizmoo_period2": "Sommer 2025 – Laufend",
-        "gizmoo_role": "UX, UI, Entwicklung & Integration"<
+        "gizmoo_role": "UX, UI, Entwicklung & Integration"
     },
     "fi": {
         "services_subheader": "Suunnittelu, Kehitys & Ketterä Projektinhallinta",
@@ -2334,4 +2334,5 @@
     }
 
 }
+
 
