@@ -563,138 +563,81 @@ img[loading="lazy"] {
 
 /* =================== Language Menu =================== */
 
-.language-menu{
-  position:relative;
-  display:inline-block;
-  margin:0;
+
+.language-menu {
+    position: relative;
+    display: inline-block;
+    margin-left: -20px;
+    margin-top: 5px;
 }
 
-/* runda knappen som alltid är cirkel */
-.language-selector{
-  display:inline-flex;
-  width:36px;
-  height:36px;
-  border-radius:50%;
-  padding:0;
-  margin:0;
-  border:0;
-  background:transparent;
-  overflow:hidden;
-  align-items:center;
-  justify-content:center;
-  cursor:pointer;
-  outline:none;
-  -webkit-appearance:none;
-  appearance:none;
-  box-shadow:none;
+.language-selector {
+    cursor: pointer;
 }
 
-/* aktuell flaggikon i knappen */
-#current-language-icon{
-  width:100%;
-  height:100%;
-  display:block;
-  object-fit:cover;
-  border-radius:50%;
-  pointer-events:none;
+.language-dropdown {
+    display: none;
+    position: absolute;
+    top: 35px;
+    left: 0;
+    background-color: rgba(18, 17, 31, 0.9);
+    border-radius: 25px;
+    padding: 5px;
+    width: 40px;
+    z-index: 1000;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    margin-left: -5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-/* dropdown behåller sig stängd som default */
-.language-dropdown{
-  display:none;               /* JS öppnar och stänger */
-  position:absolute;
-  top:42px;
-  left:0;
-  z-index:1000;
-  background-color:rgba(18,17,31,0.92);
-  backdrop-filter:saturate(130%) blur(6px);
-  -webkit-backdrop-filter:saturate(130%) blur(6px);
-  padding:6px;
-  border-radius:16px;
-  box-shadow:0 10px 30px rgba(0,0,0,0.35);
-  width:auto;
-  min-width:48px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:6px;
-  transform-origin:top left;
-  transform:scale(0.96);
-  opacity:0;
-  transition:opacity .15s ease, transform .15s ease;
+.language-icon-wrapper {
+    display: inline-flex; /* Ensures the child elements align properly */
+    justify-content: center; /* Center the icon */
+    align-items: center; /* Center the icon */
+    width: 50px; /* Adjust as needed */
+    height: 50px; /* Adjust as needed */
+    margin: 5px; /* Add spacing between icons */
+    border-radius: 50%; /* Keeps the circular appearance */
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer; /* Pointer to indicate it's clickable */
 }
 
-/* valfritt: om du vill toggla klass istället för inline style */
-.language-dropdown.is-open{
-  display:flex;
-  opacity:1;
-  transform:scale(1);
+.language-icon-wrapper:hover {
+    background-color: rgba(145, 71, 255, 0.8);
+    transform: scale(1.1);
+    box-shadow: 0 4px 15px rgba(145, 71, 255, 0.5);
 }
 
-/* länkarna i listan */
-.language-dropdown a{
-  display:inline-flex;
-  width:36px;
-  height:36px;
-  align-items:center;
-  justify-content:center;
-  border-radius:50%;
-  text-decoration:none;
-  outline:none;
+.language-icon {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease; /* Updated transition */
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 5px;
+    z-index: 100;
 }
 
-/* gemensam ikonstil i listan */
-.language-icon{
-  width:28px;
-  height:28px;
-  border-radius:50%;
-  display:block;
-  object-fit:cover;
-  background-color:rgba(255,255,255,0.08);
-  padding:4px;
-  transition:transform .14s ease, box-shadow .14s ease, background-color .14s ease;
+.language-icon:hover {
+    background-color: rgba(145, 71, 255, 0.8);
+    transform: scale(1.1);
+    box-shadow: 0 4px 15px rgba(145, 71, 255, 0.5);
 }
 
-/* hover och fokus ger tydlig feedback */
-.language-dropdown a:hover .language-icon,
-.language-dropdown a:focus-visible .language-icon{
-  background-color:rgba(145,71,255,0.85);
-  transform:scale(1.08);
-  box-shadow:0 6px 16px rgba(145,71,255,0.45);
-}
-
-/* tangentbordsfokus på triggern */
-.language-selector:focus-visible{
-  outline:2px solid #9147ff;
-  outline-offset:2px;
-  box-shadow:0 0 0 4px rgba(145,71,255,0.25);
-}
-
-/* mobil placering om du vill centrera under ikonen */
-@media (max-width:768px){
-  .language-dropdown{
-    top:40px;
-    left:0;
-  }
-}
-
-/* respekt för reduced motion */
-@media (prefers-reduced-motion:reduce){
-  .language-dropdown{
-    transition:none;
-  }
-  .language-icon{
-    transition:none;
-  }
-}
-
-/* övriga bilder skyddas mot drag och markering */
-img:not(.language-icon){
-  -webkit-user-drag:none;
-  user-select:none;
+#current-language-icon {
+    width: 30px;
+    height: 30px;
+    display: inline-block; /* Se till att bilden visas som en inline-block */
 }
 
 
+img:not(.language-icon) {
+    -webkit-user-drag: none;
+    user-select: none;
+}
 
 /* =================== Hero Image and Title Styling =================== */
 
@@ -4205,6 +4148,7 @@ a {
         right: -120px; /* Justera placeringen av högra linjen */
     }
 }
+
 
 
 
