@@ -97,43 +97,24 @@
 
                 <!-- Language Selection Menu -->
                 <div class="language-menu">
-                    <div class="language-selector" onclick="toggleDropdown(event)">
-                        <img src="bilder/emoji9.webp" alt="Current Language" id="current-language-icon" class="language-icon" title="Language">
-                    </div>
-                <div class="language-dropdown" id="language-dropdown">
-                    <a href="#" onclick="changeLanguage('en')">
-                        <img src="bilder/emoji9.webp" alt="English" class="language-icon" title="English">
-                    </a>
-                    <a href="#" onclick="changeLanguage('sv')">
-                        <img src="bilder/emoji2.webp" alt="Svenska" class="language-icon" title="Svenska">
-                    </a>
-                    <a href="#" onclick="changeLanguage('de')">
-                        <img src="bilder/emoji10.webp" alt="Deutsch" class="language-icon" title="Deutsch">
-                    </a>
-                    <a href="#" onclick="changeLanguage('es')">
-                        <img src="bilder/emoji11.webp" alt="Español" class="language-icon" title="Español">
-                    </a>
-                    <a href="#" onclick="changeLanguage('fi')">
-                        <img src="bilder/emoji12.webp" alt="Suomi" class="language-icon" title="Suomi">
-                    </a>
-                    <a href="#" onclick="changeLanguage('fr')">
-                        <img src="bilder/emoji13.webp" alt="Français" class="language-icon" title="Français">
-                    </a>
-                    <a href="#" onclick="changeLanguage('it')">
-                        <img src="bilder/emoji14.webp" alt="Italiano" class="language-icon" title="Italiano">
-                    </a>
-                    <a href="#" onclick="changeLanguage('ja')">
-                        <img src="bilder/emoji15.webp" alt="日本語" class="language-icon" title="日本語">
-                    </a>
-                    <a href="#" onclick="changeLanguage('pl')">
-                        <img src="bilder/emoji16.webp" alt="Polski" class="language-icon" title="Polski">
-                    </a>
-                    <a href="#" onclick="changeLanguage('ru')">
-                        <img src="bilder/emoji17.webp" alt="Rosyjski" class="language-icon" title="Rosyjski">
-                    </a>
+                  <button class="language-selector" id="language-toggle" aria-haspopup="true" aria-expanded="false">
+                    <img src="bilder/emoji9.webp" alt="Current Language" id="current-language-icon" class="language-icon" title="Language">
+                  </button>
+                
+                  <div class="language-dropdown" id="language-dropdown" role="menu" aria-labelledby="language-toggle">
+                    <a href="#" data-lang="en" role="menuitem"><img src="bilder/emoji9.webp"  alt="English"  class="language-icon" title="English"></a>
+                    <a href="#" data-lang="sv" role="menuitem"><img src="bilder/emoji2.webp"  alt="Svenska"  class="language-icon" title="Svenska"></a>
+                    <a href="#" data-lang="de" role="menuitem"><img src="bilder/emoji10.webp" alt="Deutsch"  class="language-icon" title="Deutsch"></a>
+                    <a href="#" data-lang="es" role="menuitem"><img src="bilder/emoji11.webp" alt="Español"  class="language-icon" title="Español"></a>
+                    <a href="#" data-lang="fi" role="menuitem"><img src="bilder/emoji12.webp" alt="Suomi"    class="language-icon" title="Suomi"></a>
+                    <a href="#" data-lang="fr" role="menuitem"><img src="bilder/emoji13.webp" alt="Français" class="language-icon" title="Français"></a>
+                    <a href="#" data-lang="it" role="menuitem"><img src="bilder/emoji14.webp" alt="Italiano" class="language-icon" title="Italiano"></a>
+                    <a href="#" data-lang="ja" role="menuitem"><img src="bilder/emoji15.webp" alt="日本語"      class="language-icon" title="日本語"></a>
+                    <a href="#" data-lang="pl" role="menuitem"><img src="bilder/emoji16.webp" alt="Polski"   class="language-icon" title="Polski"></a>
+                    <a href="#" data-lang="ru" role="menuitem"><img src="bilder/emoji17.webp" alt="Русский"  class="language-icon" title="Русский"></a>
+                  </div>
                 </div>
 
-                </div>
             </div>
 
             <div class="navbar-right">
@@ -3288,6 +3269,7 @@
 </body>
 
 </html>
+
 
 
 
